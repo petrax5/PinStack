@@ -79,4 +79,80 @@
       }
     });
   });
+
+  /* ---------- Theme ----------
+     Pre-paint script in <head> may already have set data-theme; sync the
+     logos, toggle state, and theme-color meta with it on load. Manual choice
+     persists in localStorage and wins; otherwise the OS preference is
+     followed live. */
+  var themeToggle = document.getElementById("themeToggle");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var themeMedia = window.matchMedia
+    ? window.matchMedia("(prefers-color-scheme: dark)")
+    : null;
+
+  function currentTheme() {
+    return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  }
+
+  function paintTheme(theme) {
+    if (theme === "dark") {
+      root.setAttribute("data-theme", "dark");
+    } else {
+      root.removeAttribute("data-theme");
+    }
+    if (themeMeta) {
+      themeMeta.setAttribute(
+        "content",
+        theme === "dark" ? "#1B1815" : "#F6F2EA"
+      );
+    }
+    /* Wordmark ink would vanish on a dark header (and vice versa in the
+       footer, which inverts), so swap the logo files with the theme. */
+    var logos = document.querySelectorAll("img[data-light]");
+    for (var i = 0; i < logos.length; i++) {
+      logos[i].setAttribute(
+        "src",
+        theme === "dark"
+          ? logos[i].getAttribute("data-dark")
+          : logos[i].getAttribute("data-light")
+      );
+    }
+    if (themeToggle) {
+      var toDark = theme !== "dark";
+      themeToggle.setAttribute("aria-pressed", String(!toDark));
+      themeToggle.setAttribute(
+        "aria-label",
+        toDark ? "Switch to dark mode" : "Switch to light mode"
+      );
+      var moon = themeToggle.querySelector(".icon-moon");
+      var sun = themeToggle.querySelector(".icon-sun");
+      if (moon) moon.hidden = !toDark;
+      if (sun) sun.hidden = toDark;
+    }
+  }
+
+  paintTheme(currentTheme());
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var next = currentTheme() === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("pinstack-theme", next);
+      } catch (e) {}
+      paintTheme(next);
+    });
+  }
+
+  if (themeMedia && themeMedia.addEventListener) {
+    themeMedia.addEventListener("change", function (event) {
+      var stored = null;
+      try {
+        stored = localStorage.getItem("pinstack-theme");
+      } catch (e) {}
+      if (!stored) {
+        paintTheme(event.matches ? "dark" : "light");
+      }
+    });
+  }
 })();
