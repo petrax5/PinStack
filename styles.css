@@ -1,8 +1,10 @@
 /* Pinstack Design: one-page studio site.
-   Tokens from brand/tokens.md. Single light theme (warm paper) per brand.
+   Tokens from brand/tokens.md. Light theme default; dark theme follows the
+   OS (prefers-color-scheme) unless the visitor picks with the header toggle.
    Shape rule: buttons 10px radius, framed images 16px. No other radii. */
 
 :root {
+  color-scheme: light;
   --paper: #F6F2EA;
   --sand: #E9DCC6;
   --ink: #1B1815;
@@ -13,6 +15,20 @@
   --font-text: Karla, "Segoe UI", system-ui, -apple-system, sans-serif;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --wrap: 1120px;
+}
+
+/* ---------- Dark theme ----------
+   Same tokens, remapped. Ember is lightened to #D99873 so small terracotta
+   text (links, eyebrows, fact labels) keeps AA contrast on the dark paper
+   (7.3:1). Clay stays for large-text accents and buttons (unchanged pair). */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #1B1815;
+  --sand: #2B241B;
+  --ink: #F6F2EA;
+  --bark: #D9CDB4;
+  --clay: #BC5837;
+  --ember: #D99873;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -30,6 +46,7 @@ body {
   font-size: 1.125rem; /* 18px */
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out);
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -180,6 +197,29 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
 }
 
 .brand img { display: block; }
+
+/* Theme toggle: moon in light mode, sun in dark. 44px target. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--sand);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 200ms var(--ease-out);
+}
+.theme-toggle:hover { background: var(--sand); }
+.theme-toggle svg { display: block; }
+/* Mobile: pin the toggle next to the hamburger at the right edge. */
+.theme-toggle { margin-left: auto; }
+@media (min-width: 900px) {
+  .desktop-nav + .theme-toggle { margin-left: 0; }
+}
 
 .desktop-nav {
   display: none;
