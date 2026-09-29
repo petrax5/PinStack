@@ -104,7 +104,7 @@
     if (themeMeta) {
       themeMeta.setAttribute(
         "content",
-        theme === "dark" ? "#17201B" : "#FBF7F0"
+        theme === "dark" ? "#111814" : "#FBF7F0"
       );
     }
     /* Wordmark ink would vanish on a dark header (and vice versa in the
