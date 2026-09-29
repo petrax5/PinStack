@@ -4,26 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pinstack Design: Websites for local businesses, built by one person</title>
-<meta name="description" content="Pinstack Design is one person in Orange County, CA, building websites from home. I build simple, honest websites for local shops and family businesses. Clear pages, plain words, easy to keep updated.">
+<meta name="description" content="Pinstack Design is one person in Orange County, CA, building simple, honest websites for local shops and family businesses. Clear pages, plain words, easy to keep updated.">
 <meta name="theme-color" content="#FBF7F0">
 <meta property="og:title" content="Pinstack Design: Websites for local businesses, built by one person">
 <meta property="og:description" content="Simple, honest websites for local shops and family businesses. One person, start to finish.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/hero-storefront.jpg">
+<meta property="og:image" content="assets/work-oasis-desktop.jpg">
 <link rel="icon" type="image/svg+xml" href="assets/pinstack-stacked-pin-mark.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=4">
 <script>
-/* Pre-paint theme: set data-theme before CSS applies so there is no flash.
-   "pinstack-theme" in localStorage wins; otherwise follow the OS. */
+/* Pre-paint theme: a saved choice wins, otherwise follow the OS. */
 (function () {
   try {
     var t = localStorage.getItem("pinstack-theme");
-    if (!t) {
-      t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
+    if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
   } catch (e) {}
 })();
@@ -35,7 +32,7 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="#top" aria-label="Pinstack Design, back to top">
-      <img src="assets/pinstack-stacked-pin-lockup.svg" data-light="assets/pinstack-stacked-pin-lockup.svg" data-dark="assets/pinstack-stacked-pin-lockup-reversed.svg" alt="Pinstack Design" width="320" height="72">
+      <img src="assets/pinstack-stacked-pin-lockup.svg" data-light="assets/pinstack-stacked-pin-lockup.svg" data-dark="assets/pinstack-stacked-pin-lockup-reversed.svg" alt="Pinstack Design" width="178" height="40">
     </a>
     <nav class="desktop-nav" aria-label="Primary">
       <a href="#services">Services</a>
@@ -43,40 +40,33 @@
       <a href="#process">Process</a>
       <a href="#about">About</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" aria-pressed="false">
-      <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
-      </svg>
-      <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
-        <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
-      </svg>
-    </button>
-    <a class="btn btn-outline btn-small header-cta" href="#contact">Get in touch</a>
-    <details class="mobile-menu">
-      <summary aria-label="Open menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="4" y1="7" x2="20" y2="7"></line>
-          <line x1="4" y1="12" x2="20" y2="12"></line>
-          <line x1="4" y1="17" x2="20" y2="17"></line>
-        </svg>
-        <span class="menu-close" aria-hidden="true">&times;</span>
-      </summary>
-      <nav aria-label="Mobile">
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
-        <a href="#process">Process</a>
-        <a href="#about">About</a>
-        <a class="btn" href="#contact">Get in touch</a>
-      </nav>
-    </details>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      </button>
+      <a class="btn btn-small header-cta" href="#contact">Get in touch</a>
+      <details class="mobile-menu">
+        <summary aria-label="Open menu">
+          <svg class="icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+          <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </summary>
+        <nav aria-label="Mobile">
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#about">About</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
 
 <main id="main">
   <span id="top" aria-hidden="true"></span>
 
-  <!-- HERO -->
+  <!-- HERO: the claim on the left, the proof on the right -->
   <section class="hero" aria-labelledby="hero-heading">
     <div class="wrap hero-grid">
       <div class="hero-copy">
@@ -88,30 +78,17 @@
           <a class="link-more" href="#work">See my work</a>
         </div>
       </div>
-      <figure class="hero-figure reveal">
-        <img src="assets/hero-storefront.jpg" alt="A row of small family-run shops on a sunny main street" width="1920" height="1280" fetchpriority="high">
-        <figcaption>The kind of shops I build websites for.</figcaption>
+      <figure class="hero-shot">
+        <div class="browser">
+          <div class="browser-bar" aria-hidden="true"><span>oasisdetailingsupplies.com</span></div>
+          <img src="assets/work-oasis-desktop.jpg" alt="The Oasis Detailing Supplies homepage, a site I designed and built" width="1280" height="800" fetchpriority="high">
+        </div>
+        <figcaption><a href="#work">Oasis Detailing Supplies</a>, Orange, CA. Designed and built by me.</figcaption>
       </figure>
-    </div>
-    <div class="wrap">
-      <div class="hero-proof">
-        <div class="proof-item">
-          <h3>One person, start to finish</h3>
-          <p>You talk to me. I design it, build it, and launch it.</p>
-        </div>
-        <div class="proof-item">
-          <h3>Made for non-technical owners</h3>
-          <p>No jargon, no upsells, nothing you have to figure out alone.</p>
-        </div>
-        <div class="proof-item">
-          <h3>Local and reachable</h3>
-          <p>Based in Orange County. I answer my own email.</p>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES: sticky heading, editorial list -->
   <section class="services" id="services" aria-labelledby="services-heading">
     <div class="wrap services-grid">
       <div class="services-head">
@@ -119,15 +96,15 @@
         <p class="section-intro">Everything a local business needs to look good online, in plain terms.</p>
       </div>
       <div class="service-list">
-        <article class="service">
+        <article class="service reveal">
           <h3>Website design</h3>
           <p>A clean, welcoming site that tells people who you are, what you offer, and how to reach you. Built by hand, not from a template.</p>
         </article>
-        <article class="service">
+        <article class="service reveal">
           <h3>Looks right on phones</h3>
           <p>Most of your customers will visit on a phone. Every site I build is designed for small screens first, so it always reads well.</p>
         </article>
-        <article class="service">
+        <article class="service reveal">
           <h3>Launch and support</h3>
           <p>I put the site live, connect your domain, and stick around after. Small updates and questions are part of the deal.</p>
         </article>
@@ -135,55 +112,58 @@
     </div>
   </section>
 
-  <!-- CASE STUDY -->
+  <!-- WORK: phone on the left, what changed on the right -->
   <section class="work" id="work" aria-labelledby="work-heading">
-    <div class="wrap">
-      <p class="eyebrow">Recent work</p>
-      <h2 id="work-heading">Oasis Detailing Supplies</h2>
-      <div class="work-grid">
-        <div class="work-info">
-          <div class="work-copy">
-            <p>I rebuilt the website for Oasis Detailing Supplies, a family-run shop in Orange, California. New design, clearer pages, and a site the owners can actually update themselves.</p>
-            <a class="btn btn-outline" href="https://oasisdetailingsupplies.com" target="_blank" rel="noopener">Visit the live site</a>
-          </div>
-          <dl class="work-facts reveal">
-            <div>
-              <dt>Client</dt>
-              <dd>Oasis Detailing Supplies, Orange, CA</dd>
-            </div>
-            <div>
-              <dt>What I did</dt>
-              <dd>Full redesign: layout, pages, and launch</dd>
-            </div>
-          </dl>
-        </div>
-        <figure class="work-shot reveal">
-          <img class="work-desktop" src="assets/work-oasis-desktop.jpg" alt="The Oasis Detailing Supplies homepage on a desktop screen" width="1280" height="800" loading="lazy">
-          <img class="work-phone" src="assets/work-oasis-phone.jpg" alt="The Oasis Detailing Supplies homepage on a phone" width="390" height="780" loading="lazy">
-        </figure>
+    <div class="wrap work-grid">
+      <figure class="work-phone reveal">
+        <img src="assets/work-oasis-phone.jpg" alt="The Oasis Detailing Supplies homepage on a phone" width="390" height="780" loading="lazy">
+      </figure>
+      <div class="work-copy">
+        <p class="eyebrow">Recent work</p>
+        <h2 id="work-heading">Oasis Detailing Supplies</h2>
+        <p class="work-lede">A family-run detailing shop in Orange, California. I rebuilt their website: new design, clearer pages, and a site the owners can actually update themselves.</p>
+        <ul class="changes">
+          <li class="reveal">
+            <h3>Call and directions, first thing</h3>
+            <p>The phone number and a directions button sit at the top, where people look first.</p>
+          </li>
+          <li class="reveal">
+            <h3>Open or closed, at a glance</h3>
+            <p>The homepage shows whether the shop is open right now.</p>
+          </li>
+          <li class="reveal">
+            <h3>English and Español</h3>
+            <p>One button switches the site to Spanish for the shop's Spanish-speaking customers.</p>
+          </li>
+        </ul>
+        <a class="btn btn-outline" href="https://oasisdetailingsupplies.com" target="_blank" rel="noopener">Visit the live site<span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </div>
   </section>
 
-  <!-- PROCESS -->
+  <!-- PROCESS: a route with four stops, ending at the pin -->
   <section class="process" id="process" aria-labelledby="process-heading">
     <div class="wrap">
       <h2 id="process-heading">How it works</h2>
       <p class="section-intro">Four simple steps, no surprises along the way.</p>
-      <ol class="steps">
-        <li class="step">
+      <ol class="route">
+        <li class="stop reveal">
+          <span class="marker" aria-hidden="true">1</span>
           <h3>Talk</h3>
           <p>Tell me about your business and what the site needs to do. A short call or a few emails is plenty.</p>
         </li>
-        <li class="step">
+        <li class="stop reveal">
+          <span class="marker" aria-hidden="true">2</span>
           <h3>Sketch</h3>
           <p>I plan the pages and sketch the layout, so you can see the shape of it before anything is built.</p>
         </li>
-        <li class="step">
+        <li class="stop reveal">
+          <span class="marker" aria-hidden="true">3</span>
           <h3>Build</h3>
           <p>I design and build the site by hand, checking it on phones and computers as I go.</p>
         </li>
-        <li class="step">
+        <li class="stop stop-end reveal">
+          <span class="marker marker-pin" aria-hidden="true"><img class="pin-light" src="assets/pinstack-stacked-pin-mark.svg" alt="" width="48" height="48"><img class="pin-dark" src="assets/pinstack-stacked-pin-mark-reversed.svg" alt="" width="48" height="48"></span>
           <h3>Launch</h3>
           <p>I put it live on your domain, and I stick around to help after it launches.</p>
         </li>
@@ -191,32 +171,46 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ABOUT: photo and the three promises -->
   <section class="about" id="about" aria-labelledby="about-heading">
     <div class="wrap about-grid">
+      <figure class="about-figure reveal">
+        <img src="assets/craft-desk.jpg" alt="Hand-drawn website sketches on paper on a wooden desk" width="1200" height="800" loading="lazy">
+        <figcaption>My home desk, where your site gets built.</figcaption>
+      </figure>
       <div class="about-copy">
         <h2 id="about-heading">Hi, I&rsquo;m Jesus.</h2>
         <p>I run Pinstack Design from my home in Orange County, California. I build websites the way a good neighbor would: honestly, carefully, and with your customers in mind.</p>
         <p class="pull-line">When you hire me, you get me.</p>
-        <p>No sales team, no handoffs, no surprises.</p>
+        <dl class="promises">
+          <div>
+            <dt>One person, start to finish</dt>
+            <dd>You talk to me. I design it, build it, and launch it.</dd>
+          </div>
+          <div>
+            <dt>Made for non-technical owners</dt>
+            <dd>No jargon, no upsells, nothing you have to figure out alone.</dd>
+          </div>
+          <div>
+            <dt>Local and reachable</dt>
+            <dd>Based in Orange County. I answer my own email.</dd>
+          </div>
+        </dl>
       </div>
-      <figure class="about-figure reveal">
-        <img src="assets/craft-desk.jpg" alt="Hand-drawn website sketches on paper on a warm wooden desk" width="1920" height="1280" loading="lazy">
-        <figcaption>My home desk, where your site gets built.</figcaption>
-      </figure>
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT: the email address is the button -->
   <section class="contact" id="contact" aria-labelledby="contact-heading">
     <div class="wrap contact-grid">
-      <div class="contact-main">
-        <p class="eyebrow">Get in touch</p>
+      <div>
         <h2 id="contact-heading">Let&rsquo;s build your site.</h2>
-        <a class="contact-email" href="mailto:hello@pinstack.design">hello@pinstack.design</a>
-        <a class="btn" href="mailto:hello@pinstack.design">Email me</a>
+        <p class="contact-intro">Tell me about your business and what you would like your website to do. I reply to every email myself.</p>
       </div>
-      <p class="contact-intro">Tell me about your business and what you would like your website to do. I reply to every email myself.</p>
+      <div class="contact-action">
+        <a class="contact-email" href="mailto:hello@pinstack.design">hello@<wbr>pinstack.design</a>
+        <p class="contact-note">A few lines is plenty to get started.</p>
+      </div>
     </div>
   </section>
 </main>
@@ -224,19 +218,18 @@
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <a class="brand" href="#top" aria-label="Pinstack Design, back to top">
-      <img src="assets/pinstack-stacked-pin-lockup-reversed.svg" alt="Pinstack Design" width="320" height="72">
+      <img src="assets/pinstack-stacked-pin-lockup-reversed.svg" alt="Pinstack Design" width="178" height="40">
     </a>
     <nav aria-label="Footer">
       <a href="#services">Services</a>
       <a href="#work">Work</a>
       <a href="#process">Process</a>
       <a href="#about">About</a>
-      <a href="#contact">Get in touch</a>
     </nav>
-    <p class="footer-meta">&copy; 2026 Pinstack Design, Orange County, California. <a href="mailto:hello@pinstack.design">hello@pinstack.design</a></p>
+    <p class="footer-meta">&copy; 2026 Pinstack Design, Orange County, California.</p>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>
