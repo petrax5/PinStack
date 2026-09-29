@@ -1,34 +1,55 @@
-/* Pinstack Design: one-page studio site.
-   Tokens from brand/tokens.md. Light theme default; dark theme follows the
-   OS (prefers-color-scheme) unless the visitor picks with the header toggle.
-   Shape rule: buttons 10px radius, framed images 16px. No other radii. */
+/* Pinstack Design: one-page site.
+   Brand system "Grove & Citrus" (brand board draft 1, Sep 2026).
+   Five tokens: Grove #1F3B2E, Citrus #F08A24, Sage #DCE5D3,
+   Cream #FBF7F0, Ink #17201B. Type: Young Serif (display only, 22px+),
+   Figtree (text). Shape rule: buttons 10px radius, framed images 16px,
+   nothing else rounded. Dark theme remaps the same tokens; dark sections
+   use Grove, never black. */
 
 :root {
   color-scheme: light;
-  --paper: #F6F2EA;
-  --sand: #E9DCC6;
-  --ink: #1B1815;
-  --bark: #443626;
-  --clay: #BC5837;
-  --ember: #9E4527;
-  --font-display: Fraunces, Georgia, "Times New Roman", serif;
-  --font-text: Karla, "Segoe UI", system-ui, -apple-system, sans-serif;
+  --grove: #1F3B2E;
+  --citrus: #F08A24;
+  --sage: #DCE5D3;
+  --cream: #FBF7F0;
+  --ink: #17201B;
+  /* Semantic roles, light theme */
+  --page: var(--cream);
+  --text: var(--ink);
+  --headline: var(--grove);
+  --link: var(--grove);
+  --eyebrow: var(--grove);
+  --band: var(--sage);
+  --card: var(--cream);
+  --hairline: rgba(31, 59, 46, 0.16);
+  --header-line: rgba(31, 59, 46, 0.14);
+  --rule: var(--grove);
+  --focus: var(--grove);
+  --hover-wash: var(--sage);
+  --font-display: "Young Serif", Georgia, serif;
+  --font-text: "Figtree", "Segoe UI", system-ui, sans-serif;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --wrap: 1120px;
 }
 
 /* ---------- Dark theme ----------
-   Same tokens, remapped. Ember is lightened to #D99873 so small terracotta
-   text (links, eyebrows, fact labels) keeps AA contrast on the dark paper
-   (7.3:1). Clay stays for large-text accents and buttons (unchanged pair). */
+   Page goes Ink (green-tinted black, sits with Grove). Cream becomes the
+   text. Links and eyebrows take Citrus, which holds 6.7:1 on Ink. Soft
+   bands take Grove with Cream text (11.4:1). */
 [data-theme="dark"] {
   color-scheme: dark;
-  --paper: #1B1815;
-  --sand: #2B241B;
-  --ink: #F6F2EA;
-  --bark: #D9CDB4;
-  --clay: #BC5837;
-  --ember: #D99873;
+  --page: #17201B;
+  --text: #FBF7F0;
+  --headline: #FBF7F0;
+  --link: var(--citrus);
+  --eyebrow: var(--citrus);
+  --band: var(--grove);
+  --card: #17201B;
+  --hairline: rgba(251, 247, 240, 0.16);
+  --header-line: rgba(251, 247, 240, 0.12);
+  --rule: rgba(251, 247, 240, 0.28);
+  --focus: var(--citrus);
+  --hover-wash: var(--grove);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -40,52 +61,86 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--page);
+  color: var(--text);
   font-family: var(--font-text);
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.6;
+  font-size: 1.125rem; /* 18px body */
+  font-weight: 400;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out);
 }
 
 img { max-width: 100%; height: auto; display: block; }
 
-/* ---------- Type ---------- */
+::selection { background: var(--citrus); color: #17201B; }
+
+/* ---------- Type ----------
+   Scale from the brand board (18px base, 1.25 factor):
+   69 hero / 55 big section / 44 section H2 / 35 case title /
+   28 H3 / 22.5 lede / 18 body / 14.4 labels. Phones drop the top
+   three steps: hero 44, big section 35, H2 28. */
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.15;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--headline);
   margin: 0 0 0.6em;
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.75rem, 1.6rem + 5vw, 5.25rem); line-height: 1.02; letter-spacing: -0.02em; max-width: 13ch; } /* 44-84px */
-h2 { font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem); line-height: 1.05; letter-spacing: -0.015em; margin-bottom: 1rem; } /* 36-56px */
-h3 { font-size: 1.5rem; } /* 24px */
+h1 {
+  font-size: clamp(2.75rem, 1rem + 4vw, 4.3125rem); /* 44-69px */
+  letter-spacing: -0.01em;
+  max-width: 13ch;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 1rem + 3.4vw, 2.75rem); /* 28-44px */
+  margin-bottom: 1rem;
+}
+
+/* Case study title sits one step under section H2s. */
+.work h2 {
+  font-size: clamp(1.75rem, 1.25rem + 2.3vw, 2.1875rem); /* 28-35px */
+}
+
+/* Contact band headline is the "big section" step. */
+.contact h2 {
+  font-size: clamp(2.1875rem, 1.25rem + 4.2vw, 3.4375rem); /* 35-55px */
+  color: #FBF7F0;
+  max-width: 13ch;
+}
+
+h3 {
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: 1.75rem; /* 28px */
+  line-height: 1.2;
+}
 
 p { margin: 0 0 1em; }
 
 .eyebrow {
-  font-size: 0.8125rem;
+  font-size: 0.9rem; /* 14.4px labels */
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ember);
+  color: var(--eyebrow);
   margin: 0 0 0.9rem;
 }
 
 .lede {
-  color: var(--bark);
-  font-size: 1.25rem;
+  font-size: 1.40625rem; /* 22.5px */
+  font-weight: 500;
+  line-height: 1.5;
   max-width: 34ch;
 }
 
 .section-intro {
-  color: var(--bark);
-  font-size: 1.25rem;
-  margin-bottom: 3.5rem;
+  font-size: 1.125rem;
+  margin-bottom: 3rem;
   max-width: 44ch;
 }
 
@@ -100,63 +155,68 @@ p { margin: 0 0 1em; }
 
 section { padding: 5rem 0; }
 
-/* ---------- Links & buttons ---------- */
+/* ---------- Links & buttons ----------
+   Links are Grove with an underline, never Citrus. Main button: Citrus
+   fill, Ink label (6.7:1). Secondary: Grove outline. One Citrus moment
+   per screen, not counting the logo, so the header CTA is the outline
+   style and the hero keeps the single Citrus button. */
 
-a { color: var(--ember); text-underline-offset: 0.15em; }
-/* Hover keeps Ember: Clay (4.1:1 on Paper) fails AA for small text, so only
-   large-text elements use Clay on hover. */
-a:hover { color: var(--ember); text-decoration-thickness: 2px; }
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+a:hover { text-decoration-thickness: 2px; }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 0.75rem 1.75rem;
-  background: var(--clay);
-  color: var(--paper);
+  min-height: 52px;
+  padding: 0.8rem 1.9rem;
+  background: var(--citrus);
+  color: #17201B;
   font-family: var(--font-text);
-  font-size: 1.1875rem; /* 19px bold = large text, clears AA on Clay */
+  font-size: 1.0625rem;
   font-weight: 700;
   text-decoration: none;
-  border: 2px solid var(--clay);
+  border: 2px solid var(--citrus);
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 200ms var(--ease-out),
-              border-color 200ms var(--ease-out),
-              transform 200ms var(--ease-out);
+  transition: filter 200ms var(--ease-out), transform 200ms var(--ease-out),
+              background-color 200ms var(--ease-out), color 200ms var(--ease-out);
 }
 
-.btn:hover { background: var(--ember); border-color: var(--ember); color: var(--paper); }
+.btn:hover { filter: brightness(0.93); }
 .btn:active { transform: translateY(1px); }
 
-.btn-small { font-size: 1.1875rem; min-height: 44px; padding: 0.5rem 1.25rem; } /* 19px bold = large text, clears AA on Clay */
-.btn-large { font-size: 1.25rem; padding: 0.9rem 2.25rem; }
+.btn-small { font-size: 1rem; min-height: 44px; padding: 0.45rem 1.1rem; }
 
 .btn-outline {
   background: transparent;
-  color: var(--ember);
-  border-color: var(--ember);
+  color: var(--grove);
+  border-color: var(--grove);
 }
-.btn-outline:hover { background: var(--ember); color: var(--paper); border-color: var(--ember); }
+.btn-outline:hover { background: var(--grove); color: var(--cream); filter: none; }
+[data-theme="dark"] .btn-outline { color: #FBF7F0; border-color: #FBF7F0; }
+[data-theme="dark"] .btn-outline:hover { background: #FBF7F0; color: #17201B; }
 
 .link-more {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
   font-weight: 700;
-  font-size: 1.1875rem; /* 19px bold = large text, clears AA for the Clay hover */
-  text-decoration: none;
-  color: var(--ember);
+  font-size: 1.0625rem;
+  color: var(--link);
   border-bottom: 2px solid transparent;
-  transition: color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+  transition: border-color 200ms var(--ease-out);
 }
 .link-more::after { content: "\2192"; margin-left: 0.4em; transition: transform 200ms var(--ease-out); }
-.link-more:hover { color: var(--clay); border-color: var(--clay); }
+.link-more:hover { border-color: var(--link); }
 .link-more:hover::after { transform: translateX(4px); }
 
 :focus-visible {
-  outline: 3px solid var(--ember);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -168,15 +228,15 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   left: 1rem;
   top: -4rem;
   z-index: 100;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--grove);
+  color: #FBF7F0;
   padding: 0.75rem 1.25rem;
   border-radius: 10px;
   font-weight: 700;
   text-decoration: none;
   transition: top 200ms var(--ease-out);
 }
-.skip-link:focus { top: 1rem; color: var(--paper); }
+.skip-link:focus { top: 1rem; }
 
 /* ---------- Header ---------- */
 
@@ -184,8 +244,8 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--paper);
-  border-bottom: 1px solid var(--sand);
+  background: var(--page);
+  border-bottom: 1px solid var(--header-line);
 }
 
 .header-inner {
@@ -198,7 +258,7 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   gap: 1rem;
 }
 
-.brand img { display: block; }
+.brand img { display: block; height: 38px; width: auto; }
 
 /* Theme toggle: moon in light mode, sun in dark. 44px target. */
 .theme-toggle {
@@ -211,11 +271,11 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   border: 0;
   border-radius: 10px;
   background: transparent;
-  color: var(--ink);
+  color: var(--text);
   cursor: pointer;
   transition: background-color 200ms var(--ease-out);
 }
-.theme-toggle:hover { background: var(--sand); }
+.theme-toggle:hover { background: var(--hover-wash); }
 .theme-toggle svg { display: block; }
 /* Header CTA lives after the toggle so it stays the right-edge anchor.
    Desktop only; the mobile menu carries its own CTA in the dropdown. */
@@ -224,12 +284,7 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
 .theme-toggle { margin-left: auto; }
 @media (min-width: 900px) {
   .theme-toggle { margin-left: 0; }
-  .header-cta {
-    display: inline-flex;
-    font-size: 1.1875rem; /* 19px bold = large text, clears AA on Clay */
-    padding: 0.45rem 1.1rem;
-    min-height: 44px;
-  }
+  .header-cta { display: inline-flex; }
 }
 
 .desktop-nav {
@@ -238,17 +293,17 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   gap: 2rem;
 }
 .desktop-nav a:not(.btn) {
-  color: var(--ink);
+  color: var(--text);
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.9rem; /* 14.4px labels */
+  font-weight: 700;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
   border-bottom: 2px solid transparent;
   transition: color 200ms var(--ease-out), border-color 200ms var(--ease-out);
 }
-.desktop-nav a:not(.btn):hover { color: var(--ember); border-color: var(--ember); }
+.desktop-nav a:not(.btn):hover { color: var(--link); border-color: var(--link); }
 
 /* Mobile menu: native <details>, works with no JS and by keyboard */
 .mobile-menu { position: relative; }
@@ -261,11 +316,11 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  color: var(--ink);
+  color: var(--text);
   transition: background-color 200ms var(--ease-out);
 }
 .mobile-menu summary::-webkit-details-marker { display: none; }
-.mobile-menu summary:hover { background: var(--sand); }
+.mobile-menu summary:hover { background: var(--hover-wash); }
 .mobile-menu .menu-close { display: none; font-size: 1.75rem; line-height: 1; }
 .mobile-menu[open] summary svg { display: none; }
 .mobile-menu[open] summary .menu-close { display: inline; }
@@ -273,10 +328,10 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   position: absolute;
   right: 0;
   top: calc(100% + 0.5rem);
-  background: var(--paper);
-  border: 1px solid var(--sand);
+  background: var(--page);
+  border: 1px solid var(--hairline);
   border-radius: 10px;
-  box-shadow: 0 12px 32px rgba(27, 24, 21, 0.14);
+  box-shadow: 0 12px 32px rgba(23, 32, 27, 0.18);
   padding: 0.75rem;
   min-width: 220px;
   display: flex;
@@ -288,13 +343,13 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   align-items: center;
   min-height: 48px;
   padding: 0 1rem;
-  color: var(--ink);
+  color: var(--text);
   font-weight: 600;
   text-decoration: none;
   border-radius: 8px;
   transition: background-color 200ms var(--ease-out);
 }
-.mobile-menu nav a:not(.btn):hover { background: var(--sand); color: var(--ink); }
+.mobile-menu nav a:not(.btn):hover { background: var(--hover-wash); }
 .mobile-menu nav .btn { margin-top: 0.25rem; }
 /* Gentle open for the menu panel; reduced-motion kills it globally below. */
 .mobile-menu[open] nav {
@@ -325,47 +380,44 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
 
 .hero-figure {
   margin: 0;
-  border: 1px solid var(--sand);
+  border: 1px solid var(--hairline);
   border-radius: 16px;
   overflow: hidden;
-  background: var(--sand);
+  background: var(--band);
 }
 .hero-figure img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
 .hero-figure figcaption,
 .about-figure figcaption {
-  font-size: 0.9375rem;
-  color: var(--bark);
+  font-size: 0.9rem;
   padding: 0.75rem 1.25rem;
-  background: var(--paper);
+  background: var(--page);
 }
 
-/* Proof row: the three promises, moved up from the old trust band. */
+/* Proof row: the three promises, ruled off from the hero. */
 .hero-proof {
   margin-top: 4.5rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--rule);
   padding-top: 1.5rem;
   display: grid;
   gap: 2rem;
 }
 .proof-item h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-text);
   font-weight: 600;
   font-size: 1.25rem;
   margin-bottom: 0.35rem;
 }
-.proof-item p { font-size: 1rem; color: var(--bark); margin: 0; }
+.proof-item p { font-size: 1rem; margin: 0; }
 @media (min-width: 640px) {
   .hero-proof { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
 }
 
 /* ---------- Services ---------- */
 
-.services { background: var(--paper); }
-
 .service-list { margin-top: 1rem; }
-.service { padding: 2.25rem 0; border-top: 1px solid var(--sand); }
-.service:last-child { border-bottom: 1px solid var(--sand); }
-.service p { color: var(--bark); font-size: 1.0625rem; max-width: 62ch; margin-bottom: 0; }
+.service { padding: 2.25rem 0; border-top: 1px solid var(--hairline); }
+.service:last-child { border-bottom: 1px solid var(--hairline); }
+.service p { font-size: 1.0625rem; max-width: 62ch; margin-bottom: 0; }
 
 @media (min-width: 900px) {
   .services-grid { display: grid; grid-template-columns: 4fr 8fr; gap: 4rem; }
@@ -374,11 +426,11 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
 
 /* ---------- Work / case study ---------- */
 
-.work { background: var(--sand); }
+.work { background: var(--band); }
 
 .work-grid { display: grid; gap: 2.5rem; }
 
-.work-copy p { color: var(--bark); max-width: 56ch; }
+.work-copy p { max-width: 56ch; }
 .work-copy .btn { margin-top: 0.75rem; }
 
 /* The proof: a framed desktop screenshot with a phone crop overlapping. */
@@ -386,7 +438,7 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
 .work-shot .work-desktop {
   width: 100%;
   border-radius: 16px;
-  box-shadow: 0 24px 48px -24px rgba(27, 24, 21, 0.35);
+  box-shadow: 0 24px 48px -24px rgba(23, 32, 27, 0.35);
 }
 .work-shot .work-phone {
   position: absolute;
@@ -394,25 +446,25 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   bottom: -20px;
   width: 120px;
   border-radius: 16px;
-  box-shadow: 0 24px 48px -24px rgba(27, 24, 21, 0.35);
+  box-shadow: 0 24px 48px -24px rgba(23, 32, 27, 0.35);
 }
 
 .work-facts {
   margin: 2rem 0 0;
-  border: 1px solid var(--sand);
+  border: 1px solid var(--hairline);
   border-radius: 16px;
-  background: var(--paper);
+  background: var(--card);
   padding: 1.75rem;
 }
-.work-facts > div { padding: 0.9rem 0; border-top: 1px solid var(--sand); }
+.work-facts > div { padding: 0.9rem 0; border-top: 1px solid var(--hairline); }
 .work-facts > div:first-child { border-top: none; padding-top: 0; }
 .work-facts > div:last-child { padding-bottom: 0; }
 .work-facts dt {
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ember);
+  color: var(--eyebrow);
   margin-bottom: 0.3rem;
 }
 .work-facts dd { margin: 0; font-weight: 600; }
@@ -432,99 +484,86 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   /* "/ """ hides the numeral from screen readers; the <ol> already announces it. */
   content: counter(step) / "";
   counter-increment: step;
-  position: static;
   display: block;
-  width: auto;
-  height: auto;
-  background: none;
-  border-radius: 0;
-  font: 600 3.5rem/1 var(--font-display);
-  color: var(--clay);
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--headline);
   margin-bottom: 0.75rem;
 }
 .step h3 { margin-bottom: 0.4rem; }
-.step p { color: var(--bark); margin-bottom: 0; font-size: 1.0625rem; }
+.step p { margin-bottom: 0; font-size: 1.0625rem; }
 
 /* ---------- About ---------- */
 
-.about { background: var(--sand); }
+.about { background: var(--band); }
 
 .about-grid { display: grid; gap: 3rem; align-items: center; }
 
-.about-copy p { color: var(--bark); max-width: 56ch; }
+.about-copy p { max-width: 56ch; }
 
 /* Pull line: the one sentence that carries the section. */
 .pull-line {
   font-family: var(--font-display);
-  font-weight: 600;
   font-size: 1.75rem;
   line-height: 1.25;
-  color: var(--ink);
+  color: var(--headline);
   margin: 2rem 0;
 }
 
 .about-figure {
   margin: 0;
-  border: 1px solid var(--sand);
+  border: 1px solid var(--hairline);
   border-radius: 16px;
   overflow: hidden;
-  background: var(--sand);
+  background: var(--band);
   max-width: 420px;
 }
 .about-figure img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
 
-/* ---------- Contact: dark closing band ---------- */
+/* ---------- Contact: Grove closing band ----------
+   Dark sections use Grove, not black, in both themes. Cream on Grove is
+   11.4:1; the Citrus eyebrow and email underline are the band's Citrus
+   moments (4.9:1, highlights on dark bands). */
 
 .contact {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--grove);
+  color: #FBF7F0;
   padding: 8rem 0;
 }
-/* On the dark band the default Ember is too dark for small text, so the
-   eyebrow takes the lightened terracotta; in dark mode the band inverts
-   to light and the eyebrow takes the regular Ember back. */
-.contact .eyebrow { color: #D99873; }
-[data-theme="dark"] .contact .eyebrow { color: #9E4527; }
+.contact .eyebrow { color: var(--citrus); }
 
 .contact-grid { display: grid; gap: 3rem; }
-
-.contact h2 {
-  font-size: clamp(2.75rem, 1.6rem + 5vw, 5.25rem);
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  max-width: 13ch;
-}
 
 /* The email address is the hero element of the band. */
 .contact-email {
   display: inline-block;
   font-family: var(--font-display);
-  font-weight: 600;
   font-size: clamp(1.75rem, 1rem + 2.5vw, 2.75rem);
   line-height: 1.2;
-  color: var(--paper);
-  text-decoration-color: var(--clay);
+  color: #FBF7F0;
+  text-decoration-color: var(--citrus);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
   overflow-wrap: anywhere;
   margin: 1.5rem 0 2rem;
 }
+.contact-email:hover { text-decoration-thickness: 3px; }
 .contact-main .btn { display: inline-flex; }
 
 .contact-intro {
-  color: var(--sand);
   font-size: 1.125rem;
   max-width: 44ch;
   margin: 0;
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Footer ----------
+   Grove band in both themes (Cream on Grove 11.4:1). */
 
 .site-footer {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--grove);
+  color: #FBF7F0;
   padding: 2.5rem 0;
-  border-top: 1px solid rgba(246, 242, 234, 0.12);
 }
 .footer-inner { display: flex; flex-direction: column; gap: 1.75rem; }
 .site-footer nav {
@@ -533,22 +572,20 @@ a:hover { color: var(--ember); text-decoration-thickness: 2px; }
   gap: 0.5rem 1.75rem;
 }
 .site-footer nav a {
-  color: var(--paper);
+  color: #FBF7F0;
   text-decoration: none;
   font-weight: 600;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  transition: color 200ms var(--ease-out);
+  transition: text-decoration 200ms var(--ease-out);
 }
-.site-footer nav a:hover { color: var(--paper); text-decoration: underline; text-underline-offset: 0.2em; }
-.footer-meta { color: var(--sand); font-size: 0.9375rem; margin: 0; }
-.footer-meta a { color: var(--paper); }
+.site-footer nav a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.footer-meta { font-size: 0.9375rem; margin: 0; }
+.footer-meta a { color: #FBF7F0; }
 
 /* ---------- Reveal on scroll (JS enhancement only) ---------- */
 
-/* Reveal on scroll: translate (not transform) so the desktop figure tilt
-   (transform: rotate) survives the reveal instead of being flattened by it. */
 html.js .reveal {
   opacity: 0;
   translate: 0 16px;
