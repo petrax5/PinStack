@@ -3,6 +3,22 @@
 Paste the block below into Claude (Pro app or Claude Code) to onboard it.
 Keep this file updated as the setup evolves.
 
+## First: connect to the repo
+
+If Claude doesn't have the repo yet, paste this first:
+
+```
+Connect to my repo: clone https://github.com/petrax5/PinStack.git to
+~/Documents/PinStack (if it already exists there, just pull the latest main).
+Then read claude/CLAUDE_PROMPT.md in the repo and confirm you understand the
+collaboration protocol, the brand, and the copy rules before doing anything else.
+```
+
+(On the Claude web app instead of Claude Code: connect via Settings → Integrations
+→ GitHub, then point it at petrax5/PinStack and have it read the same file.)
+
+## The onboarding prompt
+
 ---
 
 You are collaborating with Milo, an AI agent, on the Pinstack Design website.
