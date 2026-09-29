@@ -1,9 +1,20 @@
 # Claude handoff folder
 
 This folder is the bridge between Claude (design thinking) and Milo (implementation).
-Jesus pastes briefs both ways; files move through git instead of the clipboard.
 
-## Protocol
+## How it works (automated)
+
+- Milo queues work as `inbox/<slug>.task.md` and pushes.
+- A watcher on Jesus's Mac (see `bridge/INSTALL.md`) runs every 5 minutes: it feeds
+  new task files to Claude Code headless, writes replies to `outbox/<slug>.reply.md`,
+  and pushes.
+- Milo reads the reply, verifies it against the rules below, ships it to `main`,
+  and checks it live. Nothing ships without Milo's verification.
+
+Manual fallback: Jesus pastes a brief into Claude and drops Claude's answer back
+in chat; Milo implements.
+
+## Protocol details
 
 1. Milo writes a brief as `claude/brief-<topic>.md` and pushes it.
 2. On his Mac, Jesus points Claude at this repo (Claude Code on a local clone,
