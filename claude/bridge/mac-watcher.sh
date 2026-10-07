@@ -24,7 +24,8 @@ for task in "$INBOX"/*.task.md; do
   # Claim it so a concurrent run doesn't double-process.
   mv "$task" "$DONE/$slug.task.md" 2>/dev/null || continue
 
-  prompt="You are collaborating in the PinStack repo at $REPO_DIR. First read claude/README.md for the protocol, brand tokens, and hard copy rules, and follow them. Then do the task below. Output your full result (file contents, not diffs). Task:"
+  project_name="$(basename "$REPO_DIR")"
+  prompt="You are collaborating in the $project_name repo at $REPO_DIR. First read claude/README.md for the protocol, project context, and any hard rules, and follow them. Then do the task below. Output your full result (file contents, not diffs). Task:"
   reply="$(claude -p "$prompt $(cat "$DONE/$slug.task.md")" 2>/dev/null)"
   if [ -n "$reply" ]; then
     printf '%s\n' "$reply" > "$OUTBOX/$slug.reply.md"
