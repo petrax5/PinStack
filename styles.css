@@ -437,8 +437,11 @@ html.js .process.pin-enabled .pin-track { height: 360vh; }
 html.js .process.pin-enabled .pin-stage {
   position: sticky;
   top: 0;
-  height: 100vh;
-  height: 100svh;
+  /* Stop short of the bottom edge. A pinned layer touching the bottom
+     makes iOS Safari paint its bottom bar solid (Grove) instead of
+     staying transparent over the page. */
+  height: calc(100vh - 5rem);
+  height: calc(100svh - 5rem);
   display: flex;
   align-items: center;
   overflow: hidden;
