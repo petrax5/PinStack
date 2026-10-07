@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
 <script>
 /* Pre-paint theme: a saved choice wins, otherwise follow the OS. */
 (function () {
@@ -94,8 +94,9 @@
   </section>
 
   <!-- SERVICES: the pin builds itself as you scroll.
-       Desktop: a tall track with a sticky stage; the pin zooms in on entry,
-       then each stack spawns with its service as you keep scrolling.
+       Desktop: a tall track with a sticky stage. A giant pin bleeds off the
+       top, bottom, and right edges (cropped by the stage); the three stacks
+       are large cards holding their service copy, spawning one per beat.
        Without JS (or with reduced motion) the finished state just shows. -->
   <section class="services" id="services" aria-labelledby="services-heading">
     <div class="services-track" id="servicesTrack">
@@ -107,22 +108,19 @@
             <p class="services-more"><a href="services.html">See all services <span aria-hidden="true">&rarr;</span></a></p>
           </div>
           <div class="services-pin">
-            <svg class="pin-svg" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <svg class="pin-backdrop" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <path class="pin-body" d="M24 45S8.5 31.2 8.5 19.2a15.5 15.5 0 0 1 31 0C39.5 31.2 24 45 24 45Z"/>
-              <path class="pin-stack" data-i="0" d="M18.2 12h11.6a1.7 1.7 0 0 1 0 3.4h-11.6a1.7 1.7 0 0 1 0 -3.4Z"/>
-              <path class="pin-stack" data-i="1" d="M18.2 18h11.6a1.7 1.7 0 0 1 0 3.4h-11.6a1.7 1.7 0 0 1 0 -3.4Z"/>
-              <path class="pin-stack" data-i="2" d="M18.2 24h11.6a1.7 1.7 0 0 1 0 3.4h-11.6a1.7 1.7 0 0 1 0 -3.4Z"/>
             </svg>
             <ol class="service-beats" id="serviceBeats">
-              <li class="service-beat" data-i="0">
+              <li class="service-beat stack-card" data-i="0">
                 <h3>Website design</h3>
                 <p>A clean, welcoming site that tells people who you are, what you offer, and how to reach you. Built by hand, not from a template.</p>
               </li>
-              <li class="service-beat" data-i="1">
+              <li class="service-beat stack-card" data-i="1">
                 <h3>Brand redesign</h3>
                 <p>If your logo and colors feel dated or don&rsquo;t match from place to place, I tidy them up so your business looks like itself everywhere.</p>
               </li>
-              <li class="service-beat" data-i="2">
+              <li class="service-beat stack-card" data-i="2">
                 <h3>Launch and support</h3>
                 <p>I put the site live, connect your domain, and stick around after. Small updates and questions are part of the deal.</p>
               </li>
@@ -261,6 +259,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=10"></script>
+<script src="script.js?v=11"></script>
 </body>
 </html>
