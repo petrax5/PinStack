@@ -77,12 +77,13 @@ When adding a page to this site:
 - Copy the header/footer block so the nav, theme toggle, and mobile menu
   stay identical on every page.
 - **Rubber banding:** `styles.css` sets `overscroll-behavior-y: none` on
-  `html`, which kills the overscroll bounce at the top and bottom of the
-  page. Every page using this stylesheet gets it automatically — if a page
-  ever stops using `styles.css`, re-add that rule to its own CSS.
-  The footer also carries `box-shadow: 0 50vh 0 50vh var(--band)` so any
-  bounce the browser still allows at the bottom reveals the footer color,
-  not the page background. Keep that shadow on `.site-footer`.
+  both `html` and `body`, which disables the overscroll bounce at the top
+  and bottom of the page. `html` also gets `background: var(--bg)` so the
+  canvas behind the page follows the active theme. Every page using this
+  stylesheet gets it automatically — if a page ever stops using
+  `styles.css`, re-add those rules to its own CSS. (Note: a box-shadow on
+  the footer can NOT color the bounce area — it scrolls away with the
+  page — so don't try that.)
 
 ## Local preview
 
