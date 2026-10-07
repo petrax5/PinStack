@@ -268,9 +268,9 @@ a:hover { text-decoration-thickness: 2px; }
    stack is a flat full pill 15 x 3.4 at x 16.5, y 12 / 18 / 24. Here
    .pin-composition is a box with the pin's aspect ratio (the SVG viewBox
    is cropped to the pin) and each stack card sits at those coordinates,
-   scaled up ~16% for presence:
+   scaled to 125% with tightened spacing:
 
-     left 22%  width 56%  height 9.55%  top 19.4 / 33.9 / 48.5%
+     left 19.75%  width 60.5%  height 10.3%  top 19.9 / 32.4 / 44.9%
 
    Stacks hold the service title only, sized in cqw so text scales with
    the pin. The whole pin always shows top to tip; on phones it is wider
@@ -318,23 +318,23 @@ a:hover { text-decoration-thickness: 2px; }
   position: absolute; inset: 0; z-index: 1;
   list-style: none; margin: 0; padding: 0;
 }
-/* The logo's stacks, scaled up ~16% for presence: 56 x 9.55 units,
-   same 5.86 ratio, centered (left 22%), tops keep the logo's spacing. */
+/* The logo's stacks, scaled to 125% for presence: 60.5 x 10.3 units,
+   same 5.88 ratio, centered (left 19.75%), spacing tightened between them. */
 .stack-card {
   position: absolute;
-  left: 22%; width: 56%; height: 9.55%;
-  top: 19.4%;
+  left: 19.75%; width: 60.5%; height: 10.3%;
+  top: 19.9%;
   display: grid; place-items: center;
   padding: 0 3cqw;
   border-radius: 999px;
   background: #FBF7F0; color: #17201B;
   white-space: nowrap; overflow: hidden;
 }
-.stack-card[data-i="1"] { top: 33.9%; }
-.stack-card[data-i="2"] { top: 48.5%; }
+.stack-card[data-i="1"] { top: 32.4%; }
+.stack-card[data-i="2"] { top: 44.9%; }
 .stack-card h3 {
   font-family: var(--text); font-weight: 700;
-  font-size: 4.3cqw; line-height: 1; margin: 0;
+  font-size: 4.6cqw; line-height: 1; margin: 0;
   color: inherit; text-align: center;
 }
 .stack-card[data-i="0"] { background: #F08A24; color: #17201B; }
