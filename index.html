@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=21">
+<link rel="stylesheet" href="styles.css?v=22">
 <script>
 /* Pre-paint theme: a saved choice wins, otherwise follow the OS. */
 (function () {
@@ -94,10 +94,11 @@
   </section>
 
   <!-- SERVICES: the pin builds itself as you scroll.
-       Desktop: a tall track with a sticky stage. A giant pin sits behind the
-       three stack cards, cropped top/bottom/right by the stage but keeping
-       its shape (round shoulders, point at the bottom). Each stack is a wide
-       pill holding its service copy, spawning one per scroll beat.
+       The pin and its three stacks are drawn at the logo mark's exact
+       proportions: each card is one of the logo's pill stacks (same size,
+       spacing and position), holding a service title. Larger pins add a
+       one-line description. The pin may bleed past the screen and is
+       cropped below the stacks. Desktop scrubs on scroll, mobile plays once.
        Without JS (or with reduced motion) the finished state just shows. -->
   <section class="services" id="services" aria-labelledby="services-heading">
     <div class="services-track" id="servicesTrack">
@@ -116,15 +117,15 @@
               <ol class="service-beats" id="serviceBeats">
                 <li class="service-beat stack-card" data-i="0">
                   <h3>Website design</h3>
-                  <p>A clean, hand-built site that tells people who you are and how to reach you.</p>
+                  <p>A clean site, built by hand for you.</p>
                 </li>
                 <li class="service-beat stack-card" data-i="1">
                   <h3>Brand redesign</h3>
-                  <p>I tidy up your logo and colors so your business looks like itself everywhere.</p>
+                  <p>Logo and colors that match everywhere.</p>
                 </li>
                 <li class="service-beat stack-card" data-i="2">
                   <h3>Launch and support</h3>
-                  <p>I put the site live, connect your domain, and stick around after.</p>
+                  <p>Live on your domain, with help after.</p>
                 </li>
               </ol>
             </div>
