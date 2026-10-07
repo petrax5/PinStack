@@ -187,18 +187,37 @@
     return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
   }
 
+  /* ---------- Scroll-aware theme-color ----------
+     iOS Safari tints the top toolbar (around the Dynamic Island) and the
+     bottom tab bar from the theme-color meta. Follow the section sitting
+     under the chrome: Grove while the dark closing band (contact/footer)
+     is on screen, otherwise the theme's page background. */
+  var chromeBands = Array.prototype.slice.call(
+    document.querySelectorAll(".contact, .site-footer")
+  );
+  var chromeColor = null;
+
+  function paintChrome() {
+    if (!themeMeta) return;
+    var base = currentTheme() === "dark" ? "#111814" : "#FBF7F0";
+    var overBand = chromeBands.some(function (el) {
+      var r = el.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    });
+    var next = overBand ? "#1F3B2E" : base;
+    if (next !== chromeColor) {
+      chromeColor = next;
+      themeMeta.setAttribute("content", next);
+    }
+  }
+
   function paintTheme(theme) {
     if (theme === "dark") {
       root.setAttribute("data-theme", "dark");
     } else {
       root.removeAttribute("data-theme");
     }
-    if (themeMeta) {
-      themeMeta.setAttribute(
-        "content",
-        theme === "dark" ? "#111814" : "#FBF7F0"
-      );
-    }
+    paintChrome();
     /* Wordmark ink would vanish on a dark header (and vice versa in the
        footer, which inverts), so swap the logo files with the theme. */
     var logos = document.querySelectorAll("img[data-light]");
@@ -225,6 +244,19 @@
   }
 
   paintTheme(currentTheme());
+
+  /* Keep the Safari chrome tint in sync while scrolling. */
+  var chromeTicking = false;
+  function onChromeScroll() {
+    if (chromeTicking) return;
+    chromeTicking = true;
+    window.requestAnimationFrame(function () {
+      chromeTicking = false;
+      paintChrome();
+    });
+  }
+  window.addEventListener("scroll", onChromeScroll, { passive: true });
+  window.addEventListener("resize", onChromeScroll);
 
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
