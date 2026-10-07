@@ -38,6 +38,47 @@
     revealEls.forEach(function (el) { observer.observe(el); });
   }
 
+  /* ---------- Typewriter heading ----------
+     "Let's build your site." types itself when scrolled into view, then
+     keeps a blinking caret. The full text stays the accessible name; the
+     animated spans are visual only. Skipped with reduced motion or no
+     IntersectionObserver: the heading simply reads as normal text. */
+  var typeHeading = document.getElementById("contact-heading");
+
+  function runTypewriter() {
+    var full = typeHeading.textContent;
+    typeHeading.setAttribute("aria-label", full);
+    typeHeading.textContent = "";
+    var textSpan = document.createElement("span");
+    textSpan.setAttribute("aria-hidden", "true");
+    var caret = document.createElement("span");
+    caret.className = "type-caret";
+    caret.setAttribute("aria-hidden", "true");
+    typeHeading.appendChild(textSpan);
+    typeHeading.appendChild(caret);
+    var i = 0;
+    var timer = window.setInterval(function () {
+      i += 1;
+      textSpan.textContent = full.slice(0, i);
+      if (i >= full.length) window.clearInterval(timer);
+    }, 55);
+  }
+
+  if (typeHeading && !prefersReduced && "IntersectionObserver" in window) {
+    var typeSeen = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            typeSeen.disconnect();
+            runTypewriter();
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+    typeSeen.observe(typeHeading);
+  }
+
   /* ---------- Pinned route stepper ----------
      The "How it works" route pins while its track scrolls through: each
      stop takes focus in turn, then the page unpins after the last one.
