@@ -15,6 +15,11 @@ Then in another terminal (same move as the BloxBot bridge):
 Paste the tunnel URL + token to Milo in chat (never stored anywhere).
 Kill cloudflared any time to cut access instantly.
 
+Every exchange is saved as a transcript on the Mac at
+~/.claude-bridge/transcripts/<timestamp>-<repo>-<hash>.md — the brief Milo
+sent, the full prompt Claude saw (brief + project context), and Claude's
+reply. Local only, never pushed anywhere.
+
 Protocol:
   GET  /health          -> {"ok": true}
   POST /run             -> {"prompt": "...", "repo": "~/Documents/PinStack"}
@@ -30,10 +35,12 @@ import json
 import os
 import subprocess
 import sys
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 DOCUMENTS = Path.home() / "Documents"
+TRANSCRIPT_DIR = Path.home() / ".claude-bridge" / "transcripts"
 MAX_PROMPT_CHARS = 200_000
 CLAUDE_TIMEOUT_S = 600
 
@@ -65,6 +72,22 @@ def resolve_repo(repo: str) -> Path:
     if not p.is_dir():
         raise ValueError(f"repo not found: {p}")
     return p
+
+
+def save_transcript(repo_name: str, brief: str, full_prompt: str, reply: str) -> Path:
+    """Save the full exchange locally so Jesus can read what was asked/answered."""
+    TRANSCRIPT_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    digest = hashlib.sha256(brief.encode()).hexdigest()[:8]
+    path = TRANSCRIPT_DIR / f"{ts}-{repo_name}-{digest}.md"
+    path.write_text(
+        f"# Claude bridge transcript — {ts} UTC\n\n"
+        f"## Brief (what Milo sent)\n\n{brief}\n\n"
+        f"## Full prompt (brief + project context, exactly what Claude saw)\n\n"
+        f"{full_prompt}\n\n"
+        f"## Reply (what Claude returned)\n\n{reply}\n"
+    )
+    return path
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -138,6 +161,8 @@ class Handler(BaseHTTPRequestHandler):
         if proc.returncode != 0:
             fail(self, 500, f"claude exited {proc.returncode}: {proc.stderr[:500]}")
             return
+        tpath = save_transcript(repo.name, prompt, full_prompt, proc.stdout)
+        self.log_message("transcript: %s", tpath)
         ok(self, {"ok": True, "reply": proc.stdout})
 
     @staticmethod
