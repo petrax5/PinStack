@@ -557,6 +557,10 @@ html.js .process.pin-enabled .pin-progress span {
 .contact :focus-visible { outline-color: var(--citrus); }
 
 .site-footer { background: var(--band); color: var(--band-muted); }
+/* Paint the bottom overscroll area the footer color: the shadow extends
+   past the document edge without affecting layout, so any remaining
+   bounce reveals Grove instead of the page background. */
+.site-footer { box-shadow: 0 50vh 0 50vh var(--band); }
 .footer-inner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 1.25rem 2rem; padding-block: 2rem 2.5rem;
