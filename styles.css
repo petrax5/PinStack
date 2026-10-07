@@ -50,6 +50,12 @@
 
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
+/* No rubber-banding: kill the overscroll bounce at the top/bottom of the
+   page. This lives on html in the shared stylesheet, so every page that
+   links styles.css gets it. If a page ever stops using styles.css, re-add
+   this rule there. */
+html { overscroll-behavior-y: none; }
+
 body {
   margin: 0;
   background: var(--bg);
