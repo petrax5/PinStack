@@ -22,7 +22,9 @@ reply. Local only, never pushed anywhere.
 
 Protocol:
   GET  /health          -> {"ok": true}
-  POST /run             -> {"prompt": "...", "repo": "~/Documents/PinStack"}
+  POST /run             -> {"prompt": "...", "repo": "~/Documents/PinStack",
+                            "model": "opus"}   # model optional: opus|sonnet|haiku,
+                                               # omit for the CLI default
                           <- {"ok": true, "reply": "..."} or {"ok": false, "error": "..."}
   Header: Authorization: Bearer <token>
 """
@@ -74,7 +76,8 @@ def resolve_repo(repo: str) -> Path:
     return p
 
 
-def save_transcript(repo_name: str, brief: str, full_prompt: str, reply: str) -> Path:
+def save_transcript(repo_name: str, brief: str, full_prompt: str, reply: str,
+                     model: str) -> Path:
     """Save the full exchange locally so Jesus can read what was asked/answered."""
     TRANSCRIPT_DIR.mkdir(parents=True, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
@@ -82,6 +85,7 @@ def save_transcript(repo_name: str, brief: str, full_prompt: str, reply: str) ->
     path = TRANSCRIPT_DIR / f"{ts}-{repo_name}-{digest}.md"
     path.write_text(
         f"# Claude bridge transcript — {ts} UTC\n\n"
+        f"Model: {model or '(CLI default)'}\n\n"
         f"## Brief (what Milo sent)\n\n{brief}\n\n"
         f"## Full prompt (brief + project context, exactly what Claude saw)\n\n"
         f"{full_prompt}\n\n"
@@ -132,6 +136,10 @@ class Handler(BaseHTTPRequestHandler):
         prompt = str(data.get("prompt", ""))[:MAX_PROMPT_CHARS]
         if not prompt.strip():
             fail(self, 400, "prompt is required")
+        model = str(data.get("model", "")).strip().lower()
+        if model and model not in ("opus", "sonnet", "haiku"):
+            fail(self, 400, "model must be one of: opus, sonnet, haiku")
+            return
         try:
             repo = resolve_repo(str(data.get("repo", "~/Documents/PinStack")))
         except ValueError as e:
@@ -146,11 +154,15 @@ class Handler(BaseHTTPRequestHandler):
             f"Then do the task below. Output your full result (file contents, not diffs). "
             f"Task: {prompt}"
         )
-        self.log_message("run: repo=%s prompt_chars=%d", repo.name, len(prompt))
+        self.log_message("run: repo=%s model=%s prompt_chars=%d",
+                         repo.name, model or "default", len(prompt))
+        cmd = ["claude", "-p"]
+        if model:
+            cmd += ["--model", model]
+        cmd.append(full_prompt)
         try:
             proc = subprocess.run(
-                ["claude", "-p", full_prompt],
-                capture_output=True, text=True, timeout=CLAUDE_TIMEOUT_S,
+                cmd, capture_output=True, text=True, timeout=CLAUDE_TIMEOUT_S,
             )
         except FileNotFoundError:
             fail(self, 500, "claude CLI not found on PATH")
@@ -161,7 +173,7 @@ class Handler(BaseHTTPRequestHandler):
         if proc.returncode != 0:
             fail(self, 500, f"claude exited {proc.returncode}: {proc.stderr[:500]}")
             return
-        tpath = save_transcript(repo.name, prompt, full_prompt, proc.stdout)
+        tpath = save_transcript(repo.name, prompt, full_prompt, proc.stdout, model)
         self.log_message("transcript: %s", tpath)
         ok(self, {"ok": True, "reply": proc.stdout})
 
