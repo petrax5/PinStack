@@ -264,86 +264,92 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Services: the pin builds itself ----------
    Desktop: .is-choreo (set from JS) turns the section into a tall track
-   with a sticky stage. --p (0..1, set from JS) drives the pin zoom, then
-   each stack and its service beat in turn. Without .is-choreo the finished
-   state simply shows: no-JS and reduced-motion safe.
-   Mobile: .is-mobile-play zooms the pin once and fills the stacks on a
-   timer. No scroll locking on small screens. */
+   with a sticky stage. A giant pin bleeds off the top, bottom, and right
+   (cropped by the stage, which clips); the three stacks are large cards
+   holding their service copy, spawning one per scroll beat via --p (0..1).
+   Without .is-choreo the finished state simply shows: no-JS and
+   reduced-motion safe.
+   Mobile: .is-mobile-play zooms the composition once and fills the cards
+   on a timer. No scroll locking on small screens. */
 
 .services-grid { display: grid; gap: 2.5rem; }
 .services-more { margin-top: 2rem; }
 .services-more a { font-weight: 700; }
 
-.services-pin { display: grid; gap: 1.75rem; justify-items: start; align-content: start; }
-.pin-svg { width: 148px; height: auto; display: block; }
-.pin-body { fill: #1F3B2E; }
-.pin-stack[data-i="0"] { fill: #F08A24; }
-.pin-stack[data-i="1"],
-.pin-stack[data-i="2"] { fill: #FBF7F0; }
-[data-theme="dark"] .pin-body { fill: #FBF7F0; }
-[data-theme="dark"] .pin-stack[data-i="1"],
-[data-theme="dark"] .pin-stack[data-i="2"] { fill: #1F3B2E; }
+.services-pin { position: relative; display: grid; align-content: center; }
+.pin-backdrop {
+  position: absolute; z-index: 0;
+  height: 135%; width: auto;
+  top: 50%; right: -10%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.pin-backdrop .pin-body { fill: #1F3B2E; }
+[data-theme="dark"] .pin-backdrop .pin-body { fill: #FBF7F0; }
 
-.service-beats { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
-.service-beat h3 { font-size: 1.125rem; margin: 0 0 .35rem; }
-.service-beat p { color: var(--muted); max-width: 46ch; margin: 0; }
+.service-beats {
+  position: relative; z-index: 1;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 1.25rem;
+  max-width: 400px; width: 100%; justify-self: center;
+}
+.stack-card {
+  background: #FBF7F0; color: var(--ink);
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 18px 44px var(--shadow);
+}
+.stack-card h3 { font-size: 1.25rem; margin: 0 0 .4rem; }
+.stack-card p { margin: 0; color: var(--muted); max-width: 44ch; }
+.stack-card[data-i="0"] { background: #F08A24; color: #17201B; }
+.stack-card[data-i="0"] p { color: rgba(23, 32, 27, 0.82); }
+[data-theme="dark"] .stack-card[data-i="1"],
+[data-theme="dark"] .stack-card[data-i="2"] { background: #1F3B2E; color: #FBF7F0; }
+[data-theme="dark"] .stack-card[data-i="1"] p,
+[data-theme="dark"] .stack-card[data-i="2"] p { color: rgba(251, 247, 240, 0.78); }
 
 @media (min-width: 900px) {
-  .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: start; }
-  .services-head { position: sticky; top: 120px; }
-  .pin-svg { width: 190px; }
+  .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: stretch; }
+  .services-head { position: sticky; top: 120px; align-self: start; }
 
-  /* The stage sticks instead of the heading once the choreography runs. */
+  /* The stage sticks and clips the bleeding pin instead of the heading. */
   .services.is-choreo .services-head { position: static; }
   .services.is-choreo .services-track { height: 280vh; }
   .services.is-choreo .services-stage {
     position: sticky; top: 0; height: 100vh; height: 100svh;
     display: flex; align-items: center;
+    overflow: hidden;
   }
   .services.is-choreo .services-stage > .wrap { width: 100%; }
 
-  /* Pin zooms into place over the first 15% of the track. */
-  .services.is-choreo .pin-svg {
+  /* The whole composition zooms into place over the first 15% of the track. */
+  .services.is-choreo .services-pin {
     --pz: clamp(0, calc(var(--p, 0) / 0.15), 1);
     transform: scale(calc(0.55 + 0.45 * var(--pz))) translateY(calc(40px * (1 - var(--pz))));
     opacity: var(--pz);
   }
-  /* Each stack grows left-to-right across its own beat. */
-  .services.is-choreo .pin-stack {
-    transform-box: fill-box; transform-origin: left center;
-    transform: scaleX(var(--sp, 1)); opacity: var(--sp, 1);
-  }
-  .services.is-choreo .pin-stack[data-i="0"] { --sp: clamp(0, calc((var(--p, 0) - 0.22) / 0.13), 1); }
-  .services.is-choreo .pin-stack[data-i="1"] { --sp: clamp(0, calc((var(--p, 0) - 0.44) / 0.13), 1); }
-  .services.is-choreo .pin-stack[data-i="2"] { --sp: clamp(0, calc((var(--p, 0) - 0.66) / 0.13), 1); }
-  /* Each service beat fades up just behind its stack. */
-  .services.is-choreo .service-beat[data-i="0"] { --bp: clamp(0, calc((var(--p, 0) - 0.27) / 0.12), 1); }
-  .services.is-choreo .service-beat[data-i="1"] { --bp: clamp(0, calc((var(--p, 0) - 0.49) / 0.12), 1); }
-  .services.is-choreo .service-beat[data-i="2"] { --bp: clamp(0, calc((var(--p, 0) - 0.71) / 0.12), 1); }
-  .services.is-choreo .service-beat {
-    opacity: var(--bp, 1);
-    transform: translateY(calc(12px * (1 - var(--bp, 1))));
+  /* Each stack card spawns across its own beat. */
+  .services.is-choreo .stack-card[data-i="0"] { --sp: clamp(0, calc((var(--p, 0) - 0.22) / 0.13), 1); }
+  .services.is-choreo .stack-card[data-i="1"] { --sp: clamp(0, calc((var(--p, 0) - 0.44) / 0.13), 1); }
+  .services.is-choreo .stack-card[data-i="2"] { --sp: clamp(0, calc((var(--p, 0) - 0.66) / 0.13), 1); }
+  .services.is-choreo .stack-card {
+    opacity: var(--sp, 1);
+    transform: scale(calc(0.85 + 0.15 * var(--sp, 1))) translateY(calc(24px * (1 - var(--sp, 1))));
   }
 }
 
-/* Mobile play: the pin zooms once at 50% visibility, stacks fill 180ms
-   apart, beats fade in. No track, no sticky, no scroll locking. */
-.services.is-mobile-play .pin-svg {
-  transform: scale(0.55); opacity: 0;
+/* Mobile play: the composition zooms once at 50% visibility, cards fill
+   180ms apart. No track, no sticky, no scroll locking. */
+.services.is-mobile-play .services-pin {
+  transform: scale(0.92); opacity: 0;
   transition: transform 0.55s var(--ease), opacity 0.45s ease-out;
 }
-.services.is-mobile-play .pin-svg.is-zoomed { transform: none; opacity: 1; }
-.services.is-mobile-play .pin-stack {
-  transform-box: fill-box; transform-origin: left center;
-  transform: scaleX(0); opacity: 0;
-  transition: transform 0.45s var(--ease), opacity 0.35s ease-out;
+.services.is-mobile-play .services-pin.is-zoomed { transform: none; opacity: 1; }
+.services.is-mobile-play .stack-card {
+  opacity: 0; transform: translateY(24px) scale(0.96);
+  transition: opacity 0.45s ease-out, transform 0.5s var(--ease);
 }
-.services.is-mobile-play .pin-stack.is-in { transform: none; opacity: 1; }
-.services.is-mobile-play .service-beat {
-  opacity: 0; transform: translateY(12px);
-  transition: opacity 0.5s ease-out, transform 0.5s var(--ease);
-}
-.services.is-mobile-play .service-beat.is-shown { opacity: 1; transform: none; }
+.services.is-mobile-play .stack-card.is-in { opacity: 1; transform: none; }
 
 /* ---------- Services page ----------
    Layout: the hero answers "which one do I need?" with a chooser that jumps
