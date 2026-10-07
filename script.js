@@ -79,7 +79,8 @@
     function updatePin() {
       if (!processSection.classList.contains("pin-enabled")) return;
       var trackTop = pinTrack.getBoundingClientRect().top;
-      var scrollable = pinTrack.offsetHeight - window.innerHeight;
+      var stage = pinTrack.querySelector(".pin-stage");
+      var scrollable = pinTrack.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
       var scrolled = Math.min(Math.max(-trackTop, 0), Math.max(scrollable, 1));
       var progress = scrollable > 0 ? scrolled / scrollable : 0;
       var index = Math.min(stops.length - 1, Math.floor(progress * stops.length));
