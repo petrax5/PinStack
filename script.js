@@ -38,6 +38,89 @@
     revealEls.forEach(function (el) { observer.observe(el); });
   }
 
+  /* ---------- Pinned route stepper ----------
+     The "How it works" route pins while its track scrolls through: each
+     stop takes focus in turn, then the page unpins after the last one.
+     Pure progressive enhancement — no pinning without JS, with reduced
+     motion, or on viewports too short to fit the stage. */
+  var processSection = document.getElementById("process");
+  var pinTrack = document.getElementById("routePin");
+  var routeSteps = document.getElementById("routeSteps");
+
+  function pinAllowed() {
+    return (
+      !!processSection &&
+      !!pinTrack &&
+      !!routeSteps &&
+      !prefersReduced &&
+      !!window.matchMedia &&
+      window.matchMedia("(min-height: 620px)").matches &&
+      "requestAnimationFrame" in window
+    );
+  }
+
+  if (processSection && pinTrack && routeSteps) {
+    var stops = Array.prototype.slice.call(
+      routeSteps.querySelectorAll(".stop")
+    );
+    var pinActive = -1;
+
+    function setPinStep(index) {
+      if (index === pinActive) return;
+      pinActive = index;
+      stops.forEach(function (stop, i) {
+        stop.classList.toggle("is-active", i === index);
+        stop.classList.toggle("is-past", i < index);
+      });
+    }
+
+    function updatePin() {
+      if (!processSection.classList.contains("pin-enabled")) return;
+      var trackTop = pinTrack.getBoundingClientRect().top;
+      var scrollable = pinTrack.offsetHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(-trackTop, 0), Math.max(scrollable, 1));
+      var progress = scrollable > 0 ? scrolled / scrollable : 0;
+      setPinStep(
+        Math.min(stops.length - 1, Math.floor(progress * stops.length))
+      );
+    }
+
+    function refreshPin() {
+      if (!pinAllowed()) {
+        processSection.classList.remove("pin-enabled");
+        pinActive = -1;
+        stops.forEach(function (stop) {
+          stop.classList.remove("is-active", "is-past");
+        });
+        return;
+      }
+      processSection.classList.add("pin-enabled");
+      updatePin();
+    }
+
+    var pinTicking = false;
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (pinTicking) return;
+        pinTicking = true;
+        window.requestAnimationFrame(function () {
+          pinTicking = false;
+          updatePin();
+        });
+      },
+      { passive: true }
+    );
+
+    var pinResizeTimer = null;
+    window.addEventListener("resize", function () {
+      if (pinResizeTimer) window.clearTimeout(pinResizeTimer);
+      pinResizeTimer = window.setTimeout(refreshPin, 150);
+    });
+
+    refreshPin();
+  }
+
   /* Mobile menu: close the <details> after choosing a link, so focus
      returns to a sensible place and the panel does not stay open. */
   var menus = document.querySelectorAll("details.mobile-menu");
