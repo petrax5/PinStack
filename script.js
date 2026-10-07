@@ -46,6 +46,8 @@
   var processSection = document.getElementById("process");
   var pinTrack = document.getElementById("routePin");
   var routeSteps = document.getElementById("routeSteps");
+  var pinCurrent = document.getElementById("pinCurrent");
+  var pinBar = document.getElementById("pinBar");
 
   function pinAllowed() {
     return (
@@ -80,9 +82,14 @@
       var scrollable = pinTrack.offsetHeight - window.innerHeight;
       var scrolled = Math.min(Math.max(-trackTop, 0), Math.max(scrollable, 1));
       var progress = scrollable > 0 ? scrolled / scrollable : 0;
-      setPinStep(
-        Math.min(stops.length - 1, Math.floor(progress * stops.length))
-      );
+      var index = Math.min(stops.length - 1, Math.floor(progress * stops.length));
+      setPinStep(index);
+      if (pinCurrent) {
+        pinCurrent.textContent = ("0" + (index + 1)).slice(-2);
+      }
+      if (pinBar) {
+        pinBar.style.transform = "scaleX(" + progress.toFixed(3) + ")";
+      }
     }
 
     function refreshPin() {
@@ -92,6 +99,8 @@
         stops.forEach(function (stop) {
           stop.classList.remove("is-active", "is-past");
         });
+        if (pinCurrent) pinCurrent.textContent = "01";
+        if (pinBar) pinBar.style.transform = "scaleX(0)";
         return;
       }
       processSection.classList.add("pin-enabled");
