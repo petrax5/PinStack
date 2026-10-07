@@ -67,6 +67,20 @@ npx netlify-cli deploy --prod --dir .
 Push the `site/` contents to the repo root (or a `docs/` folder, then select it
 under Settings > Pages).
 
+## New pages checklist
+
+When adding a page to this site:
+
+- Link the shared `styles.css` (cache-busted as `styles.css?v=N` — bump `N`
+  every time the stylesheet changes so returning visitors get the new CSS).
+- Copy the `<head>` pre-paint theme script so dark mode doesn't flash on load.
+- Copy the header/footer block so the nav, theme toggle, and mobile menu
+  stay identical on every page.
+- **Rubber banding:** `styles.css` sets `overscroll-behavior-y: none` on
+  `html`, which kills the overscroll bounce at the top and bottom of the
+  page. Every page using this stylesheet gets it automatically — if a page
+  ever stops using `styles.css`, re-add that rule to its own CSS.
+
 ## Local preview
 
 ```bash
