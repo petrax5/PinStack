@@ -134,6 +134,135 @@
     refreshPin();
   }
 
+  /* ---------- Services pin choreography ----------
+     Desktop: the section becomes a tall track with a sticky stage; --p
+     (0..1) drives the pin zoom, then each stack and service beat in turn.
+     Scrubbed, so scrolling back rewinds. Mobile: no pinning — the pin
+     zooms once and the stacks fill on a timer. Progressive enhancement:
+     no .is-choreo/.is-mobile-play without JS, with reduced motion, or on
+     short viewports, so the finished state simply shows. */
+  var servicesSection = document.getElementById("services");
+  var servicesTrack = document.getElementById("servicesTrack");
+
+  function choreoFine() {
+    return (
+      !!window.matchMedia &&
+      window.matchMedia("(min-width: 900px)").matches &&
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(min-height: 620px)").matches
+    );
+  }
+
+  function updateChoreo() {
+    if (
+      !servicesSection.classList.contains("is-choreo") ||
+      !servicesTrack
+    ) return;
+    var trackTop = servicesTrack.getBoundingClientRect().top;
+    var scrollable = servicesTrack.offsetHeight - window.innerHeight;
+    var scrolled = Math.min(Math.max(-trackTop, 0), Math.max(scrollable, 1));
+    var p = scrollable > 0 ? scrolled / scrollable : 0;
+    servicesSection.style.setProperty("--p", p.toFixed(4));
+  }
+
+  var mobileTimers = [];
+  function clearMobileTimers() {
+    mobileTimers.forEach(function (t) { window.clearTimeout(t); });
+    mobileTimers = [];
+  }
+
+  function playMobile() {
+    var pinSvg = servicesSection.querySelector(".pin-svg");
+    var stacks = Array.prototype.slice.call(
+      servicesSection.querySelectorAll(".pin-stack")
+    );
+    var beats = Array.prototype.slice.call(
+      servicesSection.querySelectorAll(".service-beat")
+    );
+    function showBeats() {
+      beats.forEach(function (b) { b.classList.add("is-shown"); });
+    }
+    if (!("IntersectionObserver" in window)) {
+      if (pinSvg) pinSvg.classList.add("is-zoomed");
+      stacks.forEach(function (s) { s.classList.add("is-in"); });
+      showBeats();
+      return;
+    }
+    var pinWrap = servicesSection.querySelector(".services-pin");
+    var seen = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          seen.unobserve(entry.target);
+          if (pinSvg) pinSvg.classList.add("is-zoomed");
+          stacks.forEach(function (s, i) {
+            mobileTimers.push(
+              window.setTimeout(function () { s.classList.add("is-in"); }, 250 + i * 180)
+            );
+          });
+          var beatSeen = new IntersectionObserver(
+            function (bentries) {
+              bentries.forEach(function (be) {
+                if (be.isIntersecting) {
+                  be.target.classList.add("is-shown");
+                  beatSeen.unobserve(be.target);
+                }
+              });
+            },
+            { threshold: 0.3 }
+          );
+          beats.forEach(function (b) { beatSeen.observe(b); });
+        });
+      },
+      { threshold: 0.5 }
+    );
+    if (pinWrap) seen.observe(pinWrap);
+    else showBeats();
+  }
+
+  function refreshServices() {
+    if (!servicesSection || !servicesTrack) return;
+    clearMobileTimers();
+    if (!prefersReduced && choreoFine() && "requestAnimationFrame" in window) {
+      servicesSection.classList.add("is-choreo");
+      servicesSection.classList.remove("is-mobile-play");
+      updateChoreo();
+    } else if (!prefersReduced && "IntersectionObserver" in window) {
+      servicesSection.classList.remove("is-choreo");
+      servicesSection.classList.remove("is-mobile-play");
+      void servicesSection.offsetWidth; /* replay the entrance if re-added */
+      servicesSection.classList.add("is-mobile-play");
+      playMobile();
+    } else {
+      servicesSection.classList.remove("is-choreo", "is-mobile-play");
+      servicesSection.style.removeProperty("--p");
+    }
+  }
+
+  if (servicesSection && servicesTrack) {
+    var choreoTicking = false;
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (choreoTicking) return;
+        choreoTicking = true;
+        window.requestAnimationFrame(function () {
+          choreoTicking = false;
+          updateChoreo();
+        });
+      },
+      { passive: true }
+    );
+
+    var choreoResizeTimer = null;
+    window.addEventListener("resize", function () {
+      if (choreoResizeTimer) window.clearTimeout(choreoResizeTimer);
+      choreoResizeTimer = window.setTimeout(refreshServices, 150);
+    });
+
+    refreshServices();
+  }
+
   /* Mobile menu: close the <details> after choosing a link, so focus
      returns to a sensible place and the panel does not stay open. */
   var menus = document.querySelectorAll("details.mobile-menu");
