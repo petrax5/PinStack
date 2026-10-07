@@ -209,10 +209,6 @@
       chromeColor = next;
       themeMeta.setAttribute("content", next);
     }
-    /* Safari 26 ignores theme-color and tints from the page itself: mirror
-       the band state onto <html> so the canvas past the page end (under the
-       bottom tab bar) turns Grove while the footer band is on screen. */
-    root.classList.toggle("chrome-band", overBand);
   }
 
   function paintTheme(theme) {
