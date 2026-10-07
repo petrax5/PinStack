@@ -435,8 +435,7 @@ a:hover { text-decoration-thickness: 2px; }
 html.js .process.pin-enabled { padding-block: 0; }
 html.js .process.pin-enabled .pin-track { height: 360vh; }
 html.js .process.pin-enabled .pin-stage {
-  position: sticky;
-  top: 0;
+  position: relative;
   /* Stop short of the bottom edge. A pinned layer touching the bottom
      makes iOS Safari paint its bottom bar solid (Grove) instead of
      staying transparent over the page. */
@@ -445,6 +444,13 @@ html.js .process.pin-enabled .pin-stage {
   display: flex;
   align-items: center;
   overflow: hidden;
+}
+/* Sticky is only applied while the pin is engaged: a sticky element merely
+   entering the viewport makes iOS Safari paint its bottom bar solid green.
+   JS toggles .is-pinned when the track reaches the top of the viewport. */
+html.js .process.pin-enabled .pin-stage.is-pinned {
+  position: sticky;
+  top: 0;
 }
 html.js .process.pin-enabled .wrap { width: 100%; }
 
