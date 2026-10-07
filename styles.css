@@ -50,27 +50,18 @@
 
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
-/* No rubber-banding: disable the overscroll bounce at the top/bottom of
-   the page. Set on both html and body — some engines key off one, some
-   the other. The canvas behind the page uses var(--bg) so it follows the
-   active theme (Cream in light mode, near-black in dark mode).
-   This lives in the shared stylesheet, so every page that links
-   styles.css gets it. If a page ever stops using styles.css, re-add it. */
+/* Everything outside the page content (under Safari's bottom bar, behind
+   the page edges) is Grove, the footer color. The content areas paint
+   their own theme background, so only the edges change.
+   Tokens only, so it follows light and dark mode. */
 html {
-  background: var(--bg);
+  background: var(--band);
   overscroll-behavior-y: none;
 }
-/* iOS Safari 26 no longer reads theme-color: it tints its bars from the
-   page itself. Past the end of the page (under the bottom tab bar) it shows
-   the html background, so while the Grove contact/footer band is on screen
-   script.js adds .chrome-band and the canvas turns Grove to match. The body
-   keeps var(--bg), so only the area beyond the page changes. Both colors are
-   tokens, so this follows the light/dark theme automatically. */
-html.chrome-band { background: var(--band); }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--band);
   overscroll-behavior-y: none;
   color: var(--ink);
   font-family: var(--text);
@@ -78,6 +69,9 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+
+/* The page itself keeps the theme background */
+main { display: block; background: var(--bg); }
 
 img { max-width: 100%; height: auto; display: block; }
 
@@ -179,6 +173,9 @@ a:hover { text-decoration-thickness: 2px; }
      around the Dynamic Island, and it only matches if the color is opaque. */
   background: var(--bg);
   border-bottom: 1px solid var(--line);
+  /* viewport-fit=cover lets the page run under the notch: keep the bar
+     clear of the Dynamic Island / status bar. (Milo's addition.) */
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 72px; }
@@ -574,6 +571,9 @@ html.js .process.pin-enabled .pin-progress span {
   gap: 1.25rem 2rem; padding-block: 2rem 2.5rem;
   border-top: 1px solid rgba(251, 247, 240, .16);
 }
+/* Let the footer run under the iPhone's bottom bar and home indicator */
+.site-footer { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.footer-inner { padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px)); }
 .site-footer .brand img { height: 36px; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: .25rem 1.75rem; }
 .site-footer nav a {
