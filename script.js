@@ -80,6 +80,7 @@
       if (!processSection.classList.contains("pin-enabled")) return;
       var trackTop = pinTrack.getBoundingClientRect().top;
       var stage = pinTrack.querySelector(".pin-stage");
+      if (stage) stage.classList.toggle("is-pinned", trackTop <= 0);
       var scrollable = pinTrack.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
       var scrolled = Math.min(Math.max(-trackTop, 0), Math.max(scrollable, 1));
       var progress = scrollable > 0 ? scrolled / scrollable : 0;
@@ -96,6 +97,8 @@
     function refreshPin() {
       if (!pinAllowed()) {
         processSection.classList.remove("pin-enabled");
+        var pinStage = pinTrack.querySelector(".pin-stage");
+        if (pinStage) pinStage.classList.remove("is-pinned");
         pinActive = -1;
         stops.forEach(function (stop) {
           stop.classList.remove("is-active", "is-past");
