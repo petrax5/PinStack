@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=22">
+<link rel="stylesheet" href="styles.css?v=23">
 <script>
 /* Pre-paint theme: a saved choice wins, otherwise follow the OS. */
 (function () {
@@ -94,11 +94,12 @@
   </section>
 
   <!-- SERVICES: the pin builds itself as you scroll.
-       The pin and its three stacks are drawn at the logo mark's exact
-       proportions: each card is one of the logo's pill stacks (same size,
-       spacing and position), holding a service title. Larger pins add a
-       one-line description. The pin may bleed past the screen and is
-       cropped below the stacks. Desktop scrubs on scroll, mobile plays once.
+       The pin and its three stacks are the logo mark, enlarged at its exact
+       proportions: each stack is a flat pill holding a service title.
+       Desktop: the descriptions sit in the left column and appear as their
+       stack lands (scroll-scrubbed). Phones: titles only, played once.
+       The notes list is a visual duplicate, so it is aria-hidden; screen
+       readers get each description inside its stack.
        Without JS (or with reduced motion) the finished state just shows. -->
   <section class="services" id="services" aria-labelledby="services-heading">
     <div class="services-track" id="servicesTrack">
@@ -107,6 +108,20 @@
           <div class="services-head">
             <h2 id="services-heading">What I do</h2>
             <p class="section-intro">Everything a local business needs to look good online, in plain terms.</p>
+            <ul class="services-notes" aria-hidden="true">
+              <li class="services-note" data-i="0">
+                <h3>Website design</h3>
+                <p>A clean, hand-built site that tells people who you are and how to reach you.</p>
+              </li>
+              <li class="services-note" data-i="1">
+                <h3>Brand redesign</h3>
+                <p>I tidy up your logo and colors so your business looks like itself everywhere.</p>
+              </li>
+              <li class="services-note" data-i="2">
+                <h3>Launch and support</h3>
+                <p>I put the site live, connect your domain, and stick around after.</p>
+              </li>
+            </ul>
             <p class="services-more"><a href="services.html">See all services <span aria-hidden="true">&rarr;</span></a></p>
           </div>
           <div class="services-pin">
@@ -117,15 +132,15 @@
               <ol class="service-beats" id="serviceBeats">
                 <li class="service-beat stack-card" data-i="0">
                   <h3>Website design</h3>
-                  <p>A clean site, built by hand for you.</p>
+                  <p class="visually-hidden">A clean, hand-built site that tells people who you are and how to reach you.</p>
                 </li>
                 <li class="service-beat stack-card" data-i="1">
                   <h3>Brand redesign</h3>
-                  <p>Logo and colors that match everywhere.</p>
+                  <p class="visually-hidden">I tidy up your logo and colors so your business looks like itself everywhere.</p>
                 </li>
                 <li class="service-beat stack-card" data-i="2">
                   <h3>Launch and support</h3>
-                  <p>Live on your domain, with help after.</p>
+                  <p class="visually-hidden">I put the site live, connect your domain, and stick around after.</p>
                 </li>
               </ol>
             </div>
