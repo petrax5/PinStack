@@ -51,10 +51,13 @@
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
 /* No rubber-banding: kill the overscroll bounce at the top/bottom of the
-   page. This lives on html in the shared stylesheet, so every page that
-   links styles.css gets it. If a page ever stops using styles.css, re-add
-   this rule there. */
-html { overscroll-behavior-y: none; }
+   page, and paint the canvas behind it with the theme background, so any
+   remaining edge reveal matches the active theme (Cream in light mode,
+   near-black in dark mode). The footer shadow below uses var(--band),
+   which is Grove in both themes, matching the footer itself.
+   This lives on html in the shared stylesheet, so every page that links
+   styles.css gets it. If a page ever stops using styles.css, re-add it. */
+html { background: var(--bg); overscroll-behavior-y: none; }
 
 body {
   margin: 0;
