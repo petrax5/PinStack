@@ -172,52 +172,35 @@
   }
 
   function playMobile() {
-    var pinSvg = servicesSection.querySelector(".pin-svg");
-    var stacks = Array.prototype.slice.call(
-      servicesSection.querySelectorAll(".pin-stack")
+    var pinComposition = servicesSection.querySelector(".services-pin");
+    var cards = Array.prototype.slice.call(
+      servicesSection.querySelectorAll(".stack-card")
     );
-    var beats = Array.prototype.slice.call(
-      servicesSection.querySelectorAll(".service-beat")
-    );
-    function showBeats() {
-      beats.forEach(function (b) { b.classList.add("is-shown"); });
+    function showCards() {
+      cards.forEach(function (c) { c.classList.add("is-in"); });
     }
     if (!("IntersectionObserver" in window)) {
-      if (pinSvg) pinSvg.classList.add("is-zoomed");
-      stacks.forEach(function (s) { s.classList.add("is-in"); });
-      showBeats();
+      if (pinComposition) pinComposition.classList.add("is-zoomed");
+      showCards();
       return;
     }
-    var pinWrap = servicesSection.querySelector(".services-pin");
     var seen = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           seen.unobserve(entry.target);
-          if (pinSvg) pinSvg.classList.add("is-zoomed");
-          stacks.forEach(function (s, i) {
+          if (pinComposition) pinComposition.classList.add("is-zoomed");
+          cards.forEach(function (c, i) {
             mobileTimers.push(
-              window.setTimeout(function () { s.classList.add("is-in"); }, 250 + i * 180)
+              window.setTimeout(function () { c.classList.add("is-in"); }, 250 + i * 180)
             );
           });
-          var beatSeen = new IntersectionObserver(
-            function (bentries) {
-              bentries.forEach(function (be) {
-                if (be.isIntersecting) {
-                  be.target.classList.add("is-shown");
-                  beatSeen.unobserve(be.target);
-                }
-              });
-            },
-            { threshold: 0.3 }
-          );
-          beats.forEach(function (b) { beatSeen.observe(b); });
         });
       },
       { threshold: 0.5 }
     );
-    if (pinWrap) seen.observe(pinWrap);
-    else showBeats();
+    if (pinComposition) seen.observe(pinComposition);
+    else showCards();
   }
 
   function refreshServices() {
