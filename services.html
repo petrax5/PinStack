@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Pinstack Design</title>
+<meta name="description" content="Custom websites, Shopify themes and setup, website redesigns, custom elements, and a free hosted page. One person in Orange County, CA building honest websites for local businesses.">
+<meta name="theme-color" content="#FBF7F0">
+<meta property="og:title" content="Services — Pinstack Design">
+<meta property="og:description" content="Custom websites, Shopify setup, redesigns, and more. One person, start to finish.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/work-oasis-desktop.jpg">
+<link rel="icon" type="image/svg+xml" href="assets/pinstack-stacked-pin-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5">
+<script>
+/* Pre-paint theme: a saved choice wins, otherwise follow the OS. */
+(function () {
+  try {
+    var t = localStorage.getItem("pinstack-theme");
+    if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html#top" aria-label="Pinstack Design, home">
+      <img src="assets/pinstack-stacked-pin-lockup.svg" data-light="assets/pinstack-stacked-pin-lockup.svg" data-dark="assets/pinstack-stacked-pin-lockup-reversed.svg" alt="Pinstack Design" width="178" height="40">
+    </a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="services.html" aria-current="page">Services</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#process">Process</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      </button>
+      <a class="btn btn-small header-cta" href="mailto:hello@pinstack.design">Get in touch</a>
+      <details class="mobile-menu">
+        <summary aria-label="Open menu">
+          <svg class="icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+          <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </summary>
+        <nav aria-label="Mobile">
+          <a href="services.html" aria-current="page">Services</a>
+          <a href="index.html#work">Work</a>
+          <a href="index.html#process">Process</a>
+          <a href="index.html#about">About</a>
+          <a class="btn" href="mailto:hello@pinstack.design">Get in touch</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- SERVICES HERO -->
+  <section class="page-hero" aria-labelledby="services-title">
+    <div class="wrap">
+      <p class="kicker">Services</p>
+      <h1 id="services-title">Everything your business needs online.</h1>
+      <p class="lede">One person, plain words, no jargon. Pick the piece you need — or tell me what you're trying to do and I'll point you at the right one.</p>
+    </div>
+  </section>
+
+  <!-- SERVICE DETAILS -->
+  <section class="service-details" aria-label="Service details">
+    <div class="wrap">
+
+      <article class="service-detail reveal">
+        <p class="service-num" aria-hidden="true">01</p>
+        <div>
+          <h2>Custom websites</h2>
+          <p>Your business, designed from a blank page. A complete website built by hand around what you do and who you serve — not a template with your logo pasted in.</p>
+          <ul class="includes">
+            <li>Custom design, no templates</li>
+            <li>Built mobile-first, looks right on phones</li>
+            <li>Contact forms, maps, and tap-to-call</li>
+            <li>Launched on your domain</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service-detail reveal">
+        <p class="service-num" aria-hidden="true">02</p>
+        <div>
+          <h2>Shopify themes &amp; setup</h2>
+          <p>Want to sell online? I'll set up your Shopify store and shape the theme to match your brand, so it looks like your shop — not every other shop.</p>
+          <ul class="includes">
+            <li>Store setup and settings</li>
+            <li>Custom theme styling</li>
+            <li>Products and collections organized</li>
+            <li>Payments and shipping connected</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service-detail reveal">
+        <p class="service-num" aria-hidden="true">03</p>
+        <div>
+          <h2>Website redesigns</h2>
+          <p>Already have a site that's showing its age? I'll rebuild it clean and modern — keep what works, fix what doesn't, and move everything over without losing your place on the web.</p>
+          <ul class="includes">
+            <li>Fresh design, same web address</li>
+            <li>Your content carried over</li>
+            <li>Mobile and speed fixes</li>
+            <li>Launched without downtime</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service-detail reveal">
+        <p class="service-num" aria-hidden="true">04</p>
+        <div>
+          <h2>Free hosted page <span class="tag-free">Free</span></h2>
+          <p>Need something simple, fast? A clean one-page site — who you are, what you do, how to reach you — hosted at no cost. A way to get online this week, not next quarter.</p>
+          <ul class="includes">
+            <li>One-page design</li>
+            <li>Your info, hours, and services</li>
+            <li>Tap-to-call and directions</li>
+            <li>Hosted free</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service-detail reveal">
+        <p class="service-num" aria-hidden="true">05</p>
+        <div>
+          <h2>Custom elements</h2>
+          <p>Don't need a whole new site? I'll build the piece you're missing and fit it into the site you already have — matched to your look, working on day one.</p>
+          <ul class="includes">
+            <li>Booking and quote forms</li>
+            <li>Photo galleries and menus</li>
+            <li>Popups and announcements</li>
+            <li>Speed and mobile fixes</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SOMETHING ELSE -->
+  <section class="else-strip" aria-labelledby="else-heading">
+    <div class="wrap">
+      <h2 id="else-heading">Something else in mind?</h2>
+      <p>Every business is a little different. Tell me what you're trying to do and I'll tell you honestly whether I can help — and what it would take.</p>
+      <a class="btn" href="mailto:hello@pinstack.design">Ask me <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+  <!-- CONTACT: the email address is the button -->
+  <section class="contact" id="contact" aria-labelledby="contact-heading">
+    <div class="wrap contact-grid">
+      <div>
+        <h2 id="contact-heading">Let&rsquo;s build your site.</h2>
+        <p class="contact-intro">Tell me about your business and what you would like your website to do. I reply to every email myself.</p>
+      </div>
+      <div class="contact-action">
+        <a class="contact-email" href="mailto:hello@pinstack.design">hello@<wbr>pinstack.design</a>
+        <p class="contact-note">A few lines is plenty to get started.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <a class="brand" href="index.html#top" aria-label="Pinstack Design, home">
+      <img src="assets/pinstack-stacked-pin-lockup-reversed.svg" alt="Pinstack Design" width="178" height="40">
+    </a>
+    <nav aria-label="Footer">
+      <a href="services.html" aria-current="page">Services</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#process">Process</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <p class="footer-meta">&copy; 2026 Pinstack Design, Orange County, California.</p>
+  </div>
+</footer>
+
+<script src="script.js?v=4"></script>
+</body>
+</html>
