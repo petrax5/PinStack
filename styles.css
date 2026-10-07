@@ -263,67 +263,96 @@ a:hover { text-decoration-thickness: 2px; }
 /* ---------- Services ---------- */
 
 /* ---------- Services: the pin builds itself ----------
-   Desktop: .is-choreo (set from JS) turns the section into a tall track
-   with a sticky stage. A giant pin sits centered behind the three stack
-   cards (like the logo's stacks), cropped top/bottom/right by the stage
-   while keeping its shape: round shoulders, point at the bottom. Each
-   stack is a wide pill holding its service copy, spawning one per scroll
-   beat via --p (0..1). Without .is-choreo the finished state simply shows:
-   no-JS and reduced-motion safe.
-   Mobile: .is-mobile-play zooms the composition once and fills the cards
-   on a timer. No scroll locking on small screens. */
+   The pin is the logo mark enlarged at its exact proportions. In the
+   48-unit mark the pin spans x 8.5-39.5, y 3.7-45 (31 x 41.3) and each
+   stack is a flat full pill 15 x 3.4 at x 16.5, y 12 / 18 / 24. Here
+   .pin-composition is a box with the pin's aspect ratio (the SVG viewBox
+   is cropped to the pin) and each stack card sits at those coordinates
+   as a % of the box:
 
-.services-grid { display: grid; gap: 2.5rem; }
+     left 25.81%  width 48.39%  height 8.23%  top 20.10 / 34.62 / 49.15%
+
+   Stacks hold the service title only, sized in cqw so text scales with
+   the pin. The whole pin always shows top to tip; on phones it is wider
+   than the screen and its sides bleed off. On desktop the descriptions
+   live in the left column (.services-notes) and fade in with their stack.
+
+   Desktop: .is-choreo (set from JS) turns the section into a tall track
+   with a sticky stage; --p (0..1) zooms the pin in, then lands one stack
+   per scroll beat. Mobile: .is-mobile-play zooms once and fills the
+   stacks on a timer. Without either class the finished state shows:
+   no-JS and reduced-motion safe. */
+
+.services { overflow-x: clip; }
+.services-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
 .services-more { margin-top: 2rem; }
 .services-more a { font-weight: 700; }
 
-.services-pin { position: relative; display: grid; align-content: center; }
-/* The pin tracks the card stack: centered on it, 2x its height, so the
-   pills sit in the bulb the way the stacks sit in the logo. */
-.pin-composition { position: relative; }
+/* Desktop-only notes: one row per stack, same order. */
+.services-notes { display: none; list-style: none; margin: 2.25rem 0 0; padding: 0; max-width: 40ch; }
+.services-note { padding-block: .9rem; border-top: 1px solid var(--line); }
+.services-note:last-child { border-bottom: 1px solid var(--line); }
+.services-note h3 { font-family: inherit; font-size: 1rem; font-weight: 700; letter-spacing: 0; margin: 0 0 .2rem; }
+.services-note p { margin: 0; color: var(--muted); }
+
+.services-pin { position: relative; min-width: 0; }
+.pin-composition {
+  --pin-w: clamp(400px, 124vw, 560px);
+  position: relative;
+  width: var(--pin-w);
+  /* Centered even when wider than the column (bleeds off both sides). */
+  margin-inline: calc((100% - var(--pin-w)) / 2);
+  aspect-ratio: 31 / 41.3;
+  container: pin / inline-size;
+}
 .pin-backdrop {
-  position: absolute; z-index: 0;
-  height: 200%; width: auto;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -44%);
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
   pointer-events: none;
 }
 .pin-backdrop .pin-body { fill: #1F3B2E; }
 [data-theme="dark"] .pin-backdrop .pin-body { fill: #FBF7F0; }
 
 .service-beats {
-  position: relative; z-index: 1;
+  position: absolute; inset: 0; z-index: 1;
   list-style: none; margin: 0; padding: 0;
-  display: grid; gap: 1.1rem;
-  max-width: 440px; width: 100%; justify-self: center;
 }
-/* Full pills, like the logo stacks: two round sides. */
+/* The logo's stacks: flat full pills, 15 x 3.4 units, 6 units apart. */
 .stack-card {
-  background: #FBF7F0; color: var(--ink);
+  position: absolute;
+  left: 25.81%; width: 48.39%; height: 8.23%;
+  top: 20.10%;
+  display: grid; place-items: center;
+  padding: 0 3cqw;
   border-radius: 999px;
-  padding: 1.15rem 2rem;
-  box-shadow: 0 18px 44px var(--shadow);
+  background: #FBF7F0; color: #17201B;
+  white-space: nowrap; overflow: hidden;
 }
-.stack-card h3 { font-size: 1.2rem; margin: 0 0 .3rem; }
-.stack-card p { margin: 0; color: var(--muted); }
+.stack-card[data-i="1"] { top: 34.62%; }
+.stack-card[data-i="2"] { top: 49.15%; }
+.stack-card h3 {
+  font-size: 3.7cqw; line-height: 1; margin: 0;
+  color: inherit; text-align: center;
+}
 .stack-card[data-i="0"] { background: #F08A24; color: #17201B; }
-.stack-card[data-i="0"] p { color: rgba(23, 32, 27, 0.82); }
 [data-theme="dark"] .stack-card[data-i="1"],
 [data-theme="dark"] .stack-card[data-i="2"] { background: #1F3B2E; color: #FBF7F0; }
-[data-theme="dark"] .stack-card[data-i="1"] p,
-[data-theme="dark"] .stack-card[data-i="2"] p { color: rgba(251, 247, 240, 0.78); }
 
 @media (min-width: 900px) {
-  .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: stretch; }
-  .services-head { position: sticky; top: 120px; align-self: start; }
+  .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: center; }
+  .services-notes { display: block; }
+  .services-more { margin-top: 1.75rem; }
+  /* The whole pin fits the column and the viewport below the header. */
+  .pin-composition {
+    --pin-w: clamp(440px, min(100%, calc((100svh - 72px - 4rem) * 31 / 41.3)), 620px);
+  }
 
-  /* The stage sticks and clips the bleeding pin instead of the heading.
-     overflow: clip (not hidden) so the sticky stage keeps sticking to the
-     viewport while the pin bleeds past the edges. */
-  .services.is-choreo .services-head { position: static; }
-  .services.is-choreo .services-track { height: 280vh; }
+  .services.is-choreo { padding-block: 0; }
+  .services.is-choreo .services-track { height: 260vh; }
   .services.is-choreo .services-stage {
-    position: sticky; top: 0; height: 100vh; height: 100svh;
+    position: sticky; top: 72px;
+    height: calc(100vh - 72px); height: calc(100svh - 72px);
     display: flex; align-items: center;
     overflow: clip;
   }
@@ -335,22 +364,21 @@ a:hover { text-decoration-thickness: 2px; }
     transform: scale(calc(0.55 + 0.45 * var(--pz))) translateY(calc(40px * (1 - var(--pz))));
     opacity: var(--pz);
   }
-  /* Each stack card spawns across its own beat. */
-  .services.is-choreo .stack-card[data-i="0"] { --sp: clamp(0, calc((var(--p, 0) - 0.22) / 0.13), 1); }
-  .services.is-choreo .stack-card[data-i="1"] { --sp: clamp(0, calc((var(--p, 0) - 0.44) / 0.13), 1); }
-  .services.is-choreo .stack-card[data-i="2"] { --sp: clamp(0, calc((var(--p, 0) - 0.66) / 0.13), 1); }
+  /* Each stack lands across its own beat; its note fades in with it. */
+  .services.is-choreo [data-i="0"] { --sp: clamp(0, calc((var(--p, 0) - 0.22) / 0.13), 1); }
+  .services.is-choreo [data-i="1"] { --sp: clamp(0, calc((var(--p, 0) - 0.44) / 0.13), 1); }
+  .services.is-choreo [data-i="2"] { --sp: clamp(0, calc((var(--p, 0) - 0.66) / 0.13), 1); }
   .services.is-choreo .stack-card {
     opacity: var(--sp, 1);
     transform: scale(calc(0.85 + 0.15 * var(--sp, 1))) translateY(calc(24px * (1 - var(--sp, 1))));
   }
+  .services.is-choreo .services-note {
+    opacity: calc(0.25 + 0.75 * var(--sp, 1));
+  }
 }
 
-/* Mobile play: the composition zooms once at 50% visibility, cards fill
-   180ms apart. No track, no sticky, no scroll locking. The pin stays
-   smaller here so more of its shape reads on a phone screen. */
-@media (max-width: 899px) {
-  .pin-backdrop { height: 175%; }
-}
+/* Mobile play: the composition zooms once at 30% visibility, cards fill
+   180ms apart. No track, no sticky, no scroll locking. */
 .services.is-mobile-play .services-pin {
   transform: scale(0.92); opacity: 0;
   transition: transform 0.55s var(--ease), opacity 0.45s ease-out;
@@ -726,9 +754,6 @@ html.js .process.pin-enabled .pin-progress span {
   .hero-shot { margin-right: calc(-1 * var(--gutter) - max(0px, (100vw - var(--wrap)) / 2)); }
   .hero-shot .browser { border-top-right-radius: 0; border-bottom-right-radius: 0; border-right: 0; }
   .hero-shot figcaption { padding-right: var(--gutter); }
-
-  .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: start; }
-  .services-head { position: sticky; top: 120px; }
 
   .work-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5rem; }
   .work-phone { width: min(100%, 340px); }
