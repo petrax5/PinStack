@@ -60,6 +60,13 @@ html {
   background: var(--bg);
   overscroll-behavior-y: none;
 }
+/* iOS Safari 26 no longer reads theme-color: it tints its bars from the
+   page itself. Past the end of the page (under the bottom tab bar) it shows
+   the html background, so while the Grove contact/footer band is on screen
+   script.js adds .chrome-band and the canvas turns Grove to match. The body
+   keeps var(--bg), so only the area beyond the page changes. Both colors are
+   tokens, so this follows the light/dark theme automatically. */
+html.chrome-band { background: var(--band); }
 
 body {
   margin: 0;
@@ -168,12 +175,11 @@ a:hover { text-decoration-thickness: 2px; }
 
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: saturate(1.4) blur(10px);
-  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  /* Solid, not translucent: Safari samples this sticky bar to tint the area
+     around the Dynamic Island, and it only matches if the color is opaque. */
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
-@supports not (backdrop-filter: blur(1px)) { .site-header { background: var(--bg); } }
 
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 72px; }
 .brand { display: block; flex: none; }
