@@ -255,73 +255,97 @@ a:hover { text-decoration-thickness: 2px; }
 .services-more { margin-top: 2rem; }
 .services-more a { font-weight: 700; }
 
-/* ---------- Services page ---------- */
+/* ---------- Services page ----------
+   Layout: the hero answers "which one do I need?" with a chooser that jumps
+   to the right tile. Five services, five tiles with different sizes and
+   surfaces (Grove, Sage, the Oasis redesign as proof, Cream panel, a wide
+   row), so the page reads as a menu, not a stack of identical blocks.
+   Tiles are square-cornered; only the framed screenshot is rounded (16px).
+   Citrus stays on the primary button, so the tiles use Grove marks. */
 
-.kicker {
-  font-weight: 700;
-  font-size: .875rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--citrus);
-  margin: 0 0 1rem;
-}
-.page-hero { padding-bottom: 0; }
-.page-hero h1 { max-width: 14ch; }
-.page-hero .lede { font-size: 1.25rem; color: var(--muted); max-width: 44ch; margin-top: 1.25rem; }
+.svc-hero { padding-block: clamp(3rem, 2rem + 4vw, 5.5rem) clamp(2.5rem, 2rem + 2vw, 4rem); }
+.svc-hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+.svc-hero-copy h1 { max-width: 12ch; }
+.svc-hero-copy .lede { color: var(--muted); font-size: 1.25rem; max-width: 34ch; margin-top: 1.25rem; }
 
-.service-details { padding-top: clamp(2.5rem, 2rem + 2vw, 4rem); }
-.service-detail {
-  display: grid;
-  gap: 1rem;
-  padding-block: 2.75rem;
-  border-top: 1px solid var(--line);
+.chooser { border-top: 2px solid var(--grove); }
+.chooser-heading {
+  font-family: var(--text); font-size: .875rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  padding-block: 1rem .25rem; margin: 0;
 }
-.service-detail:last-child { border-bottom: 1px solid var(--line); }
-.service-num {
-  font-family: var(--display);
-  color: var(--citrus);
-  letter-spacing: .08em;
-  margin: 0;
+.chooser ul { list-style: none; margin: 0; padding: 0; }
+.chooser li { border-bottom: 1px solid var(--line); }
+.chooser a {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+  column-gap: 1rem; min-height: 64px; padding-block: .75rem;
+  text-decoration: none; color: var(--ink);
 }
-.service-detail h2 { margin-bottom: .75rem; max-width: 20ch; }
-.service-detail > div > p { color: var(--muted); max-width: 56ch; }
-.tag-free {
-  display: inline-block;
-  vertical-align: middle;
-  font-family: var(--text);
-  font-size: .8125rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--on-citrus);
-  background: var(--citrus);
-  border-radius: 99px;
-  padding: .3em .8em;
-  margin-left: .5rem;
+.chooser a::after {
+  content: "\2192"; grid-column: 2; grid-row: 1 / span 2; color: var(--grove); font-weight: 700; font-size: 1.25rem;
+  transition: transform 450ms var(--ease);
 }
-.includes { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: .55rem; }
-.includes li { position: relative; padding-left: 1.75rem; color: var(--ink); }
+.chooser-need { grid-column: 1; font-weight: 700; font-size: 1.125rem; }
+.chooser-fit { grid-column: 1; color: var(--muted); font-size: .9375rem; }
+.chooser a:hover .chooser-need { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+.chooser a:hover::after { transform: translateX(6px); }
+
+.svc-grid-section { padding-top: 0; }
+.svc-grid { display: grid; gap: 1rem; }
+.svc { padding: clamp(1.75rem, 1.2rem + 2vw, 2.75rem); display: grid; gap: 1rem; align-content: start; scroll-margin-top: 96px; }
+.svc h2 { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.4rem); }
+.svc > p, .svc-proof-copy > p, .svc--wide p { color: var(--muted); max-width: 50ch; }
+
+.svc--grove { background: var(--band); color: var(--band-ink); }
+.svc--grove h2 { color: var(--band-ink); }
+.svc--grove > p { color: var(--band-muted); }
+.svc--grove .includes li { color: var(--band-ink); }
+.svc--grove .includes li::before { background: var(--band-muted); }
+
+.svc--sage { background: var(--sage); }
+.svc--panel { background: var(--panel); }
+.svc--proof { border: 1px solid var(--line); background: var(--bg); }
+.svc--wide { border-top: 2px solid var(--grove); padding-inline: 0; }
+.svc--wide > div { display: grid; gap: 1rem; }
+
+.svc-proof-shot { margin: 0; }
+.svc-proof-shot img {
+  width: 100%; border-radius: 16px; aspect-ratio: 16 / 10; object-fit: cover; object-position: top;
+  box-shadow: 0 30px 60px -40px var(--shadow);
+}
+.svc-proof-shot figcaption { margin-top: .75rem; font-size: .9375rem; color: var(--muted); }
+.svc-proof-shot figcaption a { font-weight: 700; }
+
+.includes { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.includes li { position: relative; padding-left: 1.5rem; color: var(--ink); }
+/* Small square map-stop markers, not arrows: these are items, not links */
 .includes li::before {
-  content: "\2192";
-  position: absolute;
-  left: 0;
-  color: var(--citrus);
-  font-weight: 700;
+  content: ""; position: absolute; left: .15rem; top: .62em;
+  width: .5rem; height: .5rem; background: var(--grove);
 }
+.includes--grid { gap: .6rem 2rem; }
 
-.else-strip { text-align: left; }
-.else-strip .wrap { max-width: 720px; }
-.else-strip h2 { margin-bottom: 1rem; }
-.else-strip p { color: var(--muted); margin-bottom: 1.75rem; max-width: 52ch; }
-
-/* Current-page marker in the navs */
-.desktop-nav a[aria-current="page"],
-.mobile-menu nav a[aria-current="page"] { color: var(--citrus); font-weight: 700; }
+/* Current-page marker: Grove underline (Citrus text would fail contrast on Cream) */
+.desktop-nav a[aria-current="page"] { font-weight: 700; box-shadow: inset 0 -2px 0 var(--grove); }
+.mobile-menu nav a[aria-current="page"] { font-weight: 700; box-shadow: inset 3px 0 0 var(--grove); }
 .site-footer nav a[aria-current="page"] { color: var(--band-ink); font-weight: 700; }
 
+@media (prefers-reduced-motion: no-preference) {
+  html.js .svc-grid .reveal:nth-child(2) { transition-delay: 80ms; }
+  html.js .svc-grid .reveal:nth-child(4) { transition-delay: 80ms; }
+}
+
+@media (min-width: 720px) {
+  .includes--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (min-width: 960px) {
-  .service-detail { grid-template-columns: 5rem minmax(0, 1fr); gap: 2rem; }
-  .service-num { padding-top: .4rem; }
+  .svc-hero-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 5rem; }
+  .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+  .svc--grove { grid-column: span 2; }
+  .svc--proof { grid-column: span 2; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2.5rem; align-items: center; }
+  .svc--wide { grid-column: 1 / -1; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2.5rem; align-items: start; padding-top: 2.5rem; }
+  .svc--wide .includes--grid { margin-top: .4rem; }
 }
 
 /* ---------- Work ---------- */
