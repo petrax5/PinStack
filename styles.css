@@ -427,7 +427,10 @@ a:hover { text-decoration-thickness: 2px; }
    stops take focus one by one. Without JS — or with reduced motion, or on
    a short viewport — the section renders as the normal stacked route. */
 .pin-track { position: relative; }
-.pin-stage { position: relative; }
+/* Explicit background: the stage is transparent by default, and iOS Safari
+   can sample the body (Grove) behind a stuck sticky layer for its bottom
+   bar tint instead of the main background showing through it. */
+.pin-stage { position: relative; background: var(--bg); }
 
 html.js .process.pin-enabled { padding-block: 0; }
 html.js .process.pin-enabled .pin-track { height: 360vh; }
