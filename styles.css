@@ -278,14 +278,14 @@ a:hover { text-decoration-thickness: 2px; }
 .services-more a { font-weight: 700; }
 
 .services-pin { position: relative; display: grid; align-content: center; }
-/* The pin tracks the card stack: centered on it, 2.4x its height, so the
-   pills sit on the pin the way the stacks sit in the logo. */
+/* The pin tracks the card stack: centered on it, 2x its height, so the
+   pills sit in the bulb the way the stacks sit in the logo. */
 .pin-composition { position: relative; }
 .pin-backdrop {
   position: absolute; z-index: 0;
-  height: 240%; width: auto;
+  height: 200%; width: auto;
   left: 50%; top: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -44%);
   pointer-events: none;
 }
 .pin-backdrop .pin-body { fill: #1F3B2E; }
@@ -297,11 +297,11 @@ a:hover { text-decoration-thickness: 2px; }
   display: grid; gap: 1.1rem;
   max-width: 440px; width: 100%; justify-self: center;
 }
-/* Wide pills, close to the logo stacks' proportions. */
+/* Full pills, like the logo stacks: two round sides. */
 .stack-card {
   background: #FBF7F0; color: var(--ink);
-  border-radius: 22px;
-  padding: 1.15rem 1.6rem;
+  border-radius: 999px;
+  padding: 1.15rem 2rem;
   box-shadow: 0 18px 44px var(--shadow);
 }
 .stack-card h3 { font-size: 1.2rem; margin: 0 0 .3rem; }
