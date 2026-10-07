@@ -84,6 +84,10 @@ When adding a page to this site:
   `styles.css`, re-add those rules to its own CSS. (Note: a box-shadow on
   the footer can NOT color the bounce area — it scrolls away with the
   page — so don't try that.)
+- **Safari chrome tint:** `script.js` keeps the `theme-color` meta in sync
+  while scrolling — Grove (#1F3B2E) while the dark contact/footer band is
+  on screen, otherwise the theme's page background. That's what tints the
+  toolbar around the Dynamic Island and the bottom tab bar on iOS.
 
 ## Local preview
 
