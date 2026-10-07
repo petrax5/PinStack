@@ -80,6 +80,9 @@ When adding a page to this site:
   `html`, which kills the overscroll bounce at the top and bottom of the
   page. Every page using this stylesheet gets it automatically — if a page
   ever stops using `styles.css`, re-add that rule to its own CSS.
+  The footer also carries `box-shadow: 0 50vh 0 50vh var(--band)` so any
+  bounce the browser still allows at the bottom reveals the footer color,
+  not the page background. Keep that shadow on `.site-footer`.
 
 ## Local preview
 
