@@ -264,11 +264,12 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Services: the pin builds itself ----------
    Desktop: .is-choreo (set from JS) turns the section into a tall track
-   with a sticky stage. A giant pin bleeds off the top, bottom, and right
-   (cropped by the stage, which clips); the three stacks are large cards
-   holding their service copy, spawning one per scroll beat via --p (0..1).
-   Without .is-choreo the finished state simply shows: no-JS and
-   reduced-motion safe.
+   with a sticky stage. A giant pin sits centered behind the three stack
+   cards (like the logo's stacks), cropped top/bottom/right by the stage
+   while keeping its shape: round shoulders, point at the bottom. Each
+   stack is a wide pill holding its service copy, spawning one per scroll
+   beat via --p (0..1). Without .is-choreo the finished state simply shows:
+   no-JS and reduced-motion safe.
    Mobile: .is-mobile-play zooms the composition once and fills the cards
    on a timer. No scroll locking on small screens. */
 
@@ -277,11 +278,14 @@ a:hover { text-decoration-thickness: 2px; }
 .services-more a { font-weight: 700; }
 
 .services-pin { position: relative; display: grid; align-content: center; }
+/* The pin tracks the card stack: centered on it, 2.4x its height, so the
+   pills sit on the pin the way the stacks sit in the logo. */
+.pin-composition { position: relative; }
 .pin-backdrop {
   position: absolute; z-index: 0;
-  height: 135%; width: auto;
-  top: 50%; right: -10%;
-  transform: translateY(-50%);
+  height: 240%; width: auto;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -55%);
   pointer-events: none;
 }
 .pin-backdrop .pin-body { fill: #1F3B2E; }
@@ -290,17 +294,18 @@ a:hover { text-decoration-thickness: 2px; }
 .service-beats {
   position: relative; z-index: 1;
   list-style: none; margin: 0; padding: 0;
-  display: grid; gap: 1.25rem;
-  max-width: 400px; width: 100%; justify-self: center;
+  display: grid; gap: 1.1rem;
+  max-width: 440px; width: 100%; justify-self: center;
 }
+/* Wide pills, close to the logo stacks' proportions. */
 .stack-card {
   background: #FBF7F0; color: var(--ink);
-  border-radius: 20px;
-  padding: 1.4rem 1.6rem;
+  border-radius: 22px;
+  padding: 1.15rem 1.6rem;
   box-shadow: 0 18px 44px var(--shadow);
 }
-.stack-card h3 { font-size: 1.25rem; margin: 0 0 .4rem; }
-.stack-card p { margin: 0; color: var(--muted); max-width: 44ch; }
+.stack-card h3 { font-size: 1.2rem; margin: 0 0 .3rem; }
+.stack-card p { margin: 0; color: var(--muted); }
 .stack-card[data-i="0"] { background: #F08A24; color: #17201B; }
 .stack-card[data-i="0"] p { color: rgba(23, 32, 27, 0.82); }
 [data-theme="dark"] .stack-card[data-i="1"],
@@ -312,13 +317,15 @@ a:hover { text-decoration-thickness: 2px; }
   .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: stretch; }
   .services-head { position: sticky; top: 120px; align-self: start; }
 
-  /* The stage sticks and clips the bleeding pin instead of the heading. */
+  /* The stage sticks and clips the bleeding pin instead of the heading.
+     overflow: clip (not hidden) so the sticky stage keeps sticking to the
+     viewport while the pin bleeds past the edges. */
   .services.is-choreo .services-head { position: static; }
   .services.is-choreo .services-track { height: 280vh; }
   .services.is-choreo .services-stage {
     position: sticky; top: 0; height: 100vh; height: 100svh;
     display: flex; align-items: center;
-    overflow: hidden;
+    overflow: clip;
   }
   .services.is-choreo .services-stage > .wrap { width: 100%; }
 
@@ -339,7 +346,11 @@ a:hover { text-decoration-thickness: 2px; }
 }
 
 /* Mobile play: the composition zooms once at 50% visibility, cards fill
-   180ms apart. No track, no sticky, no scroll locking. */
+   180ms apart. No track, no sticky, no scroll locking. The pin stays
+   smaller here so more of its shape reads on a phone screen. */
+@media (max-width: 899px) {
+  .pin-backdrop { height: 175%; }
+}
 .services.is-mobile-play .services-pin {
   transform: scale(0.92); opacity: 0;
   transition: transform 0.55s var(--ease), opacity 0.45s ease-out;
