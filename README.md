@@ -87,7 +87,11 @@ When adding a page to this site:
 - **Safari chrome tint:** `script.js` keeps the `theme-color` meta in sync
   while scrolling — Grove (#1F3B2E) while the dark contact/footer band is
   on screen, otherwise the theme's page background. That's what tints the
-  toolbar around the Dynamic Island and the bottom tab bar on iOS.
+  toolbar around the Dynamic Island and the bottom tab bar on older iOS.
+  Safari 26 ignores `theme-color`, so the same check also toggles
+  `html.chrome-band`, which turns the `html` background (the area past the
+  end of the page, under the bottom tab bar) Grove. The sticky header is
+  solid `var(--bg)` so Safari can match the top bar to it in either theme.
 
 ## Local preview
 
