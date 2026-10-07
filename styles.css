@@ -50,18 +50,21 @@
 
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
-/* No rubber-banding: kill the overscroll bounce at the top/bottom of the
-   page, and paint the canvas behind it with the theme background, so any
-   remaining edge reveal matches the active theme (Cream in light mode,
-   near-black in dark mode). The footer shadow below uses var(--band),
-   which is Grove in both themes, matching the footer itself.
-   This lives on html in the shared stylesheet, so every page that links
+/* No rubber-banding: disable the overscroll bounce at the top/bottom of
+   the page. Set on both html and body — some engines key off one, some
+   the other. The canvas behind the page uses var(--bg) so it follows the
+   active theme (Cream in light mode, near-black in dark mode).
+   This lives in the shared stylesheet, so every page that links
    styles.css gets it. If a page ever stops using styles.css, re-add it. */
-html { background: var(--bg); overscroll-behavior-y: none; }
+html {
+  background: var(--bg);
+  overscroll-behavior-y: none;
+}
 
 body {
   margin: 0;
   background: var(--bg);
+  overscroll-behavior-y: none;
   color: var(--ink);
   font-family: var(--text);
   font-size: 1.125rem;
@@ -560,10 +563,6 @@ html.js .process.pin-enabled .pin-progress span {
 .contact :focus-visible { outline-color: var(--citrus); }
 
 .site-footer { background: var(--band); color: var(--band-muted); }
-/* Paint the bottom overscroll area the footer color: the shadow extends
-   past the document edge without affecting layout, so any remaining
-   bounce reveals Grove instead of the page background. */
-.site-footer { box-shadow: 0 50vh 0 50vh var(--band); }
 .footer-inner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 1.25rem 2rem; padding-block: 2rem 2.5rem;
