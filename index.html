@@ -141,33 +141,39 @@
     </div>
   </section>
 
-  <!-- PROCESS: a route with four stops, ending at the pin -->
+  <!-- PROCESS: a route with four stops, ending at the pin.
+       JS can pin this into a scroll-driven stepper (see script.js);
+       without JS it renders as a plain stacked route. -->
   <section class="process" id="process" aria-labelledby="process-heading">
-    <div class="wrap">
-      <h2 id="process-heading">How it works</h2>
-      <p class="section-intro">Four simple steps, no surprises along the way.</p>
-      <ol class="route">
-        <li class="stop reveal">
-          <span class="marker" aria-hidden="true">1</span>
-          <h3>Talk</h3>
-          <p>Tell me about your business and what the site needs to do. A short call or a few emails is plenty.</p>
-        </li>
-        <li class="stop reveal">
-          <span class="marker" aria-hidden="true">2</span>
-          <h3>Sketch</h3>
-          <p>I plan the pages and sketch the layout, so you can see the shape of it before anything is built.</p>
-        </li>
-        <li class="stop reveal">
-          <span class="marker" aria-hidden="true">3</span>
-          <h3>Build</h3>
-          <p>I design and build the site by hand, checking it on phones and computers as I go.</p>
-        </li>
-        <li class="stop stop-end reveal">
-          <span class="marker marker-pin" aria-hidden="true"><img class="pin-light" src="assets/pinstack-stacked-pin-mark.svg" alt="" width="48" height="48"><img class="pin-dark" src="assets/pinstack-stacked-pin-mark-reversed.svg" alt="" width="48" height="48"></span>
-          <h3>Launch</h3>
-          <p>I put it live on your domain, and I stick around to help after it launches.</p>
-        </li>
-      </ol>
+    <div class="pin-track" id="routePin">
+      <div class="pin-stage">
+        <div class="wrap">
+          <h2 id="process-heading">How it works</h2>
+          <p class="section-intro">Four simple steps, no surprises along the way.</p>
+          <ol class="route" id="routeSteps">
+            <li class="stop">
+              <span class="marker" aria-hidden="true">1</span>
+              <h3>Talk</h3>
+              <p>Tell me about your business and what the site needs to do. A short call or a few emails is plenty.</p>
+            </li>
+            <li class="stop">
+              <span class="marker" aria-hidden="true">2</span>
+              <h3>Sketch</h3>
+              <p>I plan the pages and sketch the layout, so you can see the shape of it before anything is built.</p>
+            </li>
+            <li class="stop">
+              <span class="marker" aria-hidden="true">3</span>
+              <h3>Build</h3>
+              <p>I design and build the site by hand, checking it on phones and computers as I go.</p>
+            </li>
+            <li class="stop stop-end">
+              <span class="marker marker-pin" aria-hidden="true"><img class="pin-light" src="assets/pinstack-stacked-pin-mark.svg" alt="" width="48" height="48"><img class="pin-dark" src="assets/pinstack-stacked-pin-mark-reversed.svg" alt="" width="48" height="48"></span>
+              <h3>Launch</h3>
+              <p>I put it live on your domain, and I stick around to help after it launches.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
     </div>
   </section>
 
