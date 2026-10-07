@@ -699,6 +699,21 @@ html.js .process.pin-enabled .pin-progress span {
 .contact-note { color: var(--band-muted); font-size: 1rem; }
 .contact :focus-visible { outline-color: var(--citrus); }
 
+/* Typewriter caret for the contact heading: blinks while typing and
+   keeps blinking after the text is done. Added by JS only. */
+.type-caret {
+  display: inline-block;
+  width: 0.11em; height: 1em;
+  margin-left: 0.1em;
+  vertical-align: -0.14em;
+  background: currentColor;
+  animation: type-caret-blink 1.06s steps(1) infinite;
+}
+@keyframes type-caret-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
 .site-footer { background: var(--band); color: var(--band-muted); }
 .footer-inner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
