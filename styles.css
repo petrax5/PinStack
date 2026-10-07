@@ -311,6 +311,53 @@ a:hover { text-decoration-thickness: 2px; }
   border-left: 2px dashed var(--line);
 }
 
+/* ---------- Pinned route stepper ----------
+   When JS enables it (.pin-enabled on the section), .pin-track supplies
+   the scroll distance and .pin-stage sticks to the viewport while the four
+   stops take focus one by one. Without JS — or with reduced motion, or on
+   a short viewport — the section renders as the normal stacked route. */
+.pin-track { position: relative; }
+.pin-stage { position: relative; }
+
+html.js .process.pin-enabled { padding-block: 0; }
+html.js .process.pin-enabled .pin-track { height: 360vh; }
+html.js .process.pin-enabled .pin-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+html.js .process.pin-enabled .wrap { width: 100%; }
+
+/* The focused stop renders full-size; the rest sit back smaller. */
+html.js .process.pin-enabled .route { margin-top: 2.25rem; gap: 1.5rem; }
+html.js .process.pin-enabled .stop {
+  opacity: .3;
+  transform: scale(.86);
+  transform-origin: left center;
+  filter: saturate(.7);
+  transition:
+    opacity .5s var(--ease),
+    transform .5s var(--ease),
+    filter .5s var(--ease);
+}
+html.js .process.pin-enabled .stop p { font-size: .9375rem; }
+html.js .process.pin-enabled .stop.is-past { opacity: .55; transform: scale(.92); }
+html.js .process.pin-enabled .stop.is-active { opacity: 1; transform: scale(1); filter: none; }
+html.js .process.pin-enabled .stop.is-past .marker {
+  background: var(--grove);
+  border-color: var(--grove);
+  color: var(--bg);
+}
+html.js .process.pin-enabled .stop.is-active .marker {
+  border-color: var(--citrus);
+  color: var(--citrus);
+  box-shadow: 0 0 0 6px rgba(240, 138, 36, .16);
+}
+
 /* ---------- About ---------- */
 
 .about-grid { display: grid; gap: 3rem; align-items: center; }
@@ -381,9 +428,6 @@ a:hover { text-decoration-thickness: 2px; }
 
   html.js .reveal { opacity: 0; translate: 0 18px; transition: opacity 600ms var(--ease), translate 600ms var(--ease); }
   html.js .reveal.is-visible { opacity: 1; translate: 0 0; }
-  html.js .route .reveal:nth-child(2) { transition-delay: 90ms; }
-  html.js .route .reveal:nth-child(3) { transition-delay: 180ms; }
-  html.js .route .reveal:nth-child(4) { transition-delay: 270ms; }
 }
 @keyframes rise { from { opacity: 0; translate: 0 22px; } }
 
