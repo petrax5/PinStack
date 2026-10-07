@@ -262,13 +262,88 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Services ---------- */
 
+/* ---------- Services: the pin builds itself ----------
+   Desktop: .is-choreo (set from JS) turns the section into a tall track
+   with a sticky stage. --p (0..1, set from JS) drives the pin zoom, then
+   each stack and its service beat in turn. Without .is-choreo the finished
+   state simply shows: no-JS and reduced-motion safe.
+   Mobile: .is-mobile-play zooms the pin once and fills the stacks on a
+   timer. No scroll locking on small screens. */
+
 .services-grid { display: grid; gap: 2.5rem; }
-.service-list { display: grid; }
-.service { padding-block: 2rem; border-top: 1px solid var(--line); display: grid; gap: .6rem; }
-.service:last-child { border-bottom: 1px solid var(--line); }
-.service p { color: var(--muted); max-width: 52ch; }
 .services-more { margin-top: 2rem; }
 .services-more a { font-weight: 700; }
+
+.services-pin { display: grid; gap: 1.75rem; justify-items: start; align-content: start; }
+.pin-svg { width: 148px; height: auto; display: block; }
+.pin-body { fill: #1F3B2E; }
+.pin-stack[data-i="0"] { fill: #F08A24; }
+.pin-stack[data-i="1"],
+.pin-stack[data-i="2"] { fill: #FBF7F0; }
+[data-theme="dark"] .pin-body { fill: #FBF7F0; }
+[data-theme="dark"] .pin-stack[data-i="1"],
+[data-theme="dark"] .pin-stack[data-i="2"] { fill: #1F3B2E; }
+
+.service-beats { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+.service-beat h3 { font-size: 1.125rem; margin: 0 0 .35rem; }
+.service-beat p { color: var(--muted); max-width: 46ch; margin: 0; }
+
+@media (min-width: 900px) {
+  .services-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: start; }
+  .services-head { position: sticky; top: 120px; }
+  .pin-svg { width: 190px; }
+
+  /* The stage sticks instead of the heading once the choreography runs. */
+  .services.is-choreo .services-head { position: static; }
+  .services.is-choreo .services-track { height: 280vh; }
+  .services.is-choreo .services-stage {
+    position: sticky; top: 0; height: 100vh; height: 100svh;
+    display: flex; align-items: center;
+  }
+  .services.is-choreo .services-stage > .wrap { width: 100%; }
+
+  /* Pin zooms into place over the first 15% of the track. */
+  .services.is-choreo .pin-svg {
+    --pz: clamp(0, calc(var(--p, 0) / 0.15), 1);
+    transform: scale(calc(0.55 + 0.45 * var(--pz))) translateY(calc(40px * (1 - var(--pz))));
+    opacity: var(--pz);
+  }
+  /* Each stack grows left-to-right across its own beat. */
+  .services.is-choreo .pin-stack {
+    transform-box: fill-box; transform-origin: left center;
+    transform: scaleX(var(--sp, 1)); opacity: var(--sp, 1);
+  }
+  .services.is-choreo .pin-stack[data-i="0"] { --sp: clamp(0, calc((var(--p, 0) - 0.22) / 0.13), 1); }
+  .services.is-choreo .pin-stack[data-i="1"] { --sp: clamp(0, calc((var(--p, 0) - 0.44) / 0.13), 1); }
+  .services.is-choreo .pin-stack[data-i="2"] { --sp: clamp(0, calc((var(--p, 0) - 0.66) / 0.13), 1); }
+  /* Each service beat fades up just behind its stack. */
+  .services.is-choreo .service-beat[data-i="0"] { --bp: clamp(0, calc((var(--p, 0) - 0.27) / 0.12), 1); }
+  .services.is-choreo .service-beat[data-i="1"] { --bp: clamp(0, calc((var(--p, 0) - 0.49) / 0.12), 1); }
+  .services.is-choreo .service-beat[data-i="2"] { --bp: clamp(0, calc((var(--p, 0) - 0.71) / 0.12), 1); }
+  .services.is-choreo .service-beat {
+    opacity: var(--bp, 1);
+    transform: translateY(calc(12px * (1 - var(--bp, 1))));
+  }
+}
+
+/* Mobile play: the pin zooms once at 50% visibility, stacks fill 180ms
+   apart, beats fade in. No track, no sticky, no scroll locking. */
+.services.is-mobile-play .pin-svg {
+  transform: scale(0.55); opacity: 0;
+  transition: transform 0.55s var(--ease), opacity 0.45s ease-out;
+}
+.services.is-mobile-play .pin-svg.is-zoomed { transform: none; opacity: 1; }
+.services.is-mobile-play .pin-stack {
+  transform-box: fill-box; transform-origin: left center;
+  transform: scaleX(0); opacity: 0;
+  transition: transform 0.45s var(--ease), opacity 0.35s ease-out;
+}
+.services.is-mobile-play .pin-stack.is-in { transform: none; opacity: 1; }
+.services.is-mobile-play .service-beat {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s ease-out, transform 0.5s var(--ease);
+}
+.services.is-mobile-play .service-beat.is-shown { opacity: 1; transform: none; }
 
 /* ---------- Services page ----------
    Layout: the hero answers "which one do I need?" with a chooser that jumps
