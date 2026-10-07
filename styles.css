@@ -252,6 +252,77 @@ a:hover { text-decoration-thickness: 2px; }
 .service { padding-block: 2rem; border-top: 1px solid var(--line); display: grid; gap: .6rem; }
 .service:last-child { border-bottom: 1px solid var(--line); }
 .service p { color: var(--muted); max-width: 52ch; }
+.services-more { margin-top: 2rem; }
+.services-more a { font-weight: 700; }
+
+/* ---------- Services page ---------- */
+
+.kicker {
+  font-weight: 700;
+  font-size: .875rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--citrus);
+  margin: 0 0 1rem;
+}
+.page-hero { padding-bottom: 0; }
+.page-hero h1 { max-width: 14ch; }
+.page-hero .lede { font-size: 1.25rem; color: var(--muted); max-width: 44ch; margin-top: 1.25rem; }
+
+.service-details { padding-top: clamp(2.5rem, 2rem + 2vw, 4rem); }
+.service-detail {
+  display: grid;
+  gap: 1rem;
+  padding-block: 2.75rem;
+  border-top: 1px solid var(--line);
+}
+.service-detail:last-child { border-bottom: 1px solid var(--line); }
+.service-num {
+  font-family: var(--display);
+  color: var(--citrus);
+  letter-spacing: .08em;
+  margin: 0;
+}
+.service-detail h2 { margin-bottom: .75rem; max-width: 20ch; }
+.service-detail > div > p { color: var(--muted); max-width: 56ch; }
+.tag-free {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: var(--text);
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--on-citrus);
+  background: var(--citrus);
+  border-radius: 99px;
+  padding: .3em .8em;
+  margin-left: .5rem;
+}
+.includes { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: .55rem; }
+.includes li { position: relative; padding-left: 1.75rem; color: var(--ink); }
+.includes li::before {
+  content: "\2192";
+  position: absolute;
+  left: 0;
+  color: var(--citrus);
+  font-weight: 700;
+}
+
+.else-strip { text-align: left; }
+.else-strip .wrap { max-width: 720px; }
+.else-strip h2 { margin-bottom: 1rem; }
+.else-strip p { color: var(--muted); margin-bottom: 1.75rem; max-width: 52ch; }
+
+/* Current-page marker in the navs */
+.desktop-nav a[aria-current="page"],
+.mobile-menu nav a[aria-current="page"] { color: var(--citrus); font-weight: 700; }
+.site-footer nav a[aria-current="page"] { color: var(--band-ink); font-weight: 700; }
+
+@media (min-width: 960px) {
+  .service-detail { grid-template-columns: 5rem minmax(0, 1fr); gap: 2rem; }
+  .service-num { padding-top: .4rem; }
+}
 
 /* ---------- Work ---------- */
 
