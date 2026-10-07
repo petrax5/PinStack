@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Services — Pinstack Design</title>
-<meta name="description" content="Custom websites, Shopify themes and setup, website redesigns, custom elements, and a free hosted page. One person in Orange County, CA building honest websites for local businesses.">
+<title>Services | Pinstack Design</title>
+<meta name="description" content="Custom websites, Shopify setup, website redesigns, web hosting, and custom elements. One person in Orange County, CA building honest websites for local businesses.">
 <meta name="theme-color" content="#FBF7F0">
-<meta property="og:title" content="Services — Pinstack Design">
+<meta property="og:title" content="Services | Pinstack Design">
 <meta property="og:description" content="Custom websites, Shopify setup, redesigns, and more. One person, start to finish.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/work-oasis-desktop.jpg">
@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script>
 /* Pre-paint theme: a saved choice wins, otherwise follow the OS. */
 (function () {
@@ -64,52 +64,57 @@
 </header>
 
 <main id="main">
-  <!-- SERVICES HERO -->
-  <section class="page-hero" aria-labelledby="services-title">
-    <div class="wrap">
-      <p class="kicker">Services</p>
-      <h1 id="services-title">Everything your business needs online.</h1>
-      <p class="lede">One person, plain words, no jargon. Pick the piece you need — or tell me what you're trying to do and I'll point you at the right one.</p>
+
+  <!-- HERO: the promise on the left, "where are you starting?" on the right -->
+  <section class="svc-hero" aria-labelledby="services-title">
+    <div class="wrap svc-hero-grid">
+      <div class="svc-hero-copy">
+        <h1 id="services-title">What I can build for you.</h1>
+        <p class="lede">Plain words, no jargon. Find where you&rsquo;re starting from, or just tell me what you&rsquo;re trying to do.</p>
+      </div>
+      <nav class="chooser" aria-labelledby="chooser-heading">
+        <h2 id="chooser-heading" class="chooser-heading">Where are you starting?</h2>
+        <ul>
+          <li><a href="#custom-websites"><span class="chooser-need">I don&rsquo;t have a website yet</span><span class="chooser-fit">Custom websites</span></a></li>
+          <li><a href="#shopify"><span class="chooser-need">I want to sell online</span><span class="chooser-fit">Shopify themes and setup</span></a></li>
+          <li><a href="#redesigns"><span class="chooser-need">My website looks dated</span><span class="chooser-fit">Website redesigns</span></a></li>
+          <li><a href="#hosting"><span class="chooser-need">My site needs a home</span><span class="chooser-fit">Web hosting</span></a></li>
+          <li><a href="#custom-elements"><span class="chooser-need">I just need one piece added</span><span class="chooser-fit">Custom elements</span></a></li>
+        </ul>
+      </nav>
     </div>
   </section>
 
-  <!-- SERVICE DETAILS -->
-  <section class="service-details" aria-label="Service details">
-    <div class="wrap">
+  <!-- SERVICES: five tiles, five sizes and surfaces -->
+  <section class="svc-grid-section" aria-label="Services">
+    <div class="wrap svc-grid">
 
-      <article class="service-detail reveal">
-        <p class="service-num" aria-hidden="true">01</p>
-        <div>
-          <h2>Custom websites</h2>
-          <p>Your business, designed from a blank page. A complete website built by hand around what you do and who you serve — not a template with your logo pasted in.</p>
-          <ul class="includes">
-            <li>Custom design, no templates</li>
-            <li>Built mobile-first, looks right on phones</li>
-            <li>Contact forms, maps, and tap-to-call</li>
-            <li>Launched on your domain</li>
-          </ul>
-        </div>
+      <article class="svc svc--grove reveal" id="custom-websites" aria-labelledby="t-custom">
+        <h2 id="t-custom">Custom websites</h2>
+        <p>Your business, designed from a blank page. A complete site built by hand around what you do and who you serve, not a template with your logo pasted in.</p>
+        <ul class="includes">
+          <li>Custom design, built by hand</li>
+          <li>Made for phones first</li>
+          <li>Contact forms, maps, and tap-to-call</li>
+          <li>Launched on your domain</li>
+        </ul>
       </article>
 
-      <article class="service-detail reveal">
-        <p class="service-num" aria-hidden="true">02</p>
-        <div>
-          <h2>Shopify themes &amp; setup</h2>
-          <p>Want to sell online? I'll set up your Shopify store and shape the theme to match your brand, so it looks like your shop — not every other shop.</p>
-          <ul class="includes">
-            <li>Store setup and settings</li>
-            <li>Custom theme styling</li>
-            <li>Products and collections organized</li>
-            <li>Payments and shipping connected</li>
-          </ul>
-        </div>
+      <article class="svc svc--sage reveal" id="shopify" aria-labelledby="t-shopify">
+        <h2 id="t-shopify">Shopify themes and setup</h2>
+        <p>Want to sell online? I&rsquo;ll set up your Shopify store and shape the theme to match your brand, so it looks like your shop and not every other shop.</p>
+        <ul class="includes">
+          <li>Store setup and settings</li>
+          <li>Custom theme styling</li>
+          <li>Products and collections organized</li>
+          <li>Payments and shipping connected</li>
+        </ul>
       </article>
 
-      <article class="service-detail reveal">
-        <p class="service-num" aria-hidden="true">03</p>
-        <div>
-          <h2>Website redesigns</h2>
-          <p>Already have a site that's showing its age? I'll rebuild it clean and modern — keep what works, fix what doesn't, and move everything over without losing your place on the web.</p>
+      <article class="svc svc--proof reveal" id="redesigns" aria-labelledby="t-redesign">
+        <div class="svc-proof-copy">
+          <h2 id="t-redesign">Website redesigns</h2>
+          <p>Site showing its age? I&rsquo;ll rebuild it clean and modern. I keep what works, fix what doesn&rsquo;t, and move everything over without losing your place on the web.</p>
           <ul class="includes">
             <li>Fresh design, same web address</li>
             <li>Your content carried over</li>
@@ -117,54 +122,44 @@
             <li>Launched without downtime</li>
           </ul>
         </div>
+        <figure class="svc-proof-shot">
+          <img src="assets/work-oasis-desktop.jpg" alt="The redesigned Oasis Detailing Supplies homepage" width="1280" height="800" loading="lazy">
+          <figcaption>A recent redesign: <a href="index.html#work">Oasis Detailing Supplies</a>, Orange, CA.</figcaption>
+        </figure>
       </article>
 
-      <article class="service-detail reveal">
-        <p class="service-num" aria-hidden="true">04</p>
-        <div>
-          <h2>Web hosting solutions</h2>
-          <p>Somewhere fast and reliable for your site to live. I'll get your hosting set up right — connected to your domain, secured, and ready to grow with you.</p>
-          <ul class="includes">
-            <li>Hosting setup and configuration</li>
-            <li>Domain connection</li>
-            <li>HTTPS security included</li>
-            <li>Fast, reliable performance</li>
-          </ul>
-        </div>
+      <article class="svc svc--panel reveal" id="hosting" aria-labelledby="t-hosting">
+        <h2 id="t-hosting">Web hosting</h2>
+        <p>Somewhere fast and reliable for your site to live. I&rsquo;ll set up your hosting, connect your domain, and secure it.</p>
+        <ul class="includes">
+          <li>Hosting setup and configuration</li>
+          <li>Domain connection</li>
+          <li>HTTPS security included</li>
+        </ul>
       </article>
 
-      <article class="service-detail reveal">
-        <p class="service-num" aria-hidden="true">05</p>
+      <article class="svc svc--wide reveal" id="custom-elements" aria-labelledby="t-elements">
         <div>
-          <h2>Custom elements</h2>
-          <p>Don't need a whole new site? I'll build the piece you're missing and fit it into the site you already have — matched to your look, working on day one.</p>
-          <ul class="includes">
-            <li>Booking and quote forms</li>
-            <li>Photo galleries and menus</li>
-            <li>Popups and announcements</li>
-            <li>Speed and mobile fixes</li>
-          </ul>
+          <h2 id="t-elements">Custom elements</h2>
+          <p>Don&rsquo;t need a whole new site? I&rsquo;ll build the piece you&rsquo;re missing and fit it into the site you already have, matched to your look.</p>
         </div>
+        <ul class="includes includes--grid">
+          <li>Booking and quote forms</li>
+          <li>Photo galleries and menus</li>
+          <li>Popups and announcements</li>
+          <li>Speed and mobile fixes</li>
+        </ul>
       </article>
 
     </div>
   </section>
 
-  <!-- SOMETHING ELSE -->
-  <section class="else-strip" aria-labelledby="else-heading">
-    <div class="wrap">
-      <h2 id="else-heading">Something else in mind?</h2>
-      <p>Every business is a little different. Tell me what you're trying to do and I'll tell you honestly whether I can help — and what it would take.</p>
-      <a class="btn" href="mailto:hello@pinstack.net">Ask me <span aria-hidden="true">&rarr;</span></a>
-    </div>
-  </section>
-
-  <!-- CONTACT: the email address is the button -->
+  <!-- CONTACT: one closing ask, the email address is the button -->
   <section class="contact" id="contact" aria-labelledby="contact-heading">
     <div class="wrap contact-grid">
       <div>
-        <h2 id="contact-heading">Let&rsquo;s build your site.</h2>
-        <p class="contact-intro">Tell me about your business and what you would like your website to do. I reply to every email myself.</p>
+        <h2 id="contact-heading">Something else in mind?</h2>
+        <p class="contact-intro">Every business is a little different. Tell me what you&rsquo;re trying to do and I&rsquo;ll tell you honestly whether I can help, and what it would take. I reply to every email myself.</p>
       </div>
       <div class="contact-action">
         <a class="contact-email" href="mailto:hello@pinstack.net">hello@<wbr>pinstack.net</a>
