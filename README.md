@@ -78,16 +78,20 @@ When adding a page to this site:
   stay identical on every page.
 - **Rubber banding:** `styles.css` sets `overscroll-behavior-y: none` on
   both `html` and `body`, which disables the overscroll bounce at the top
-  and bottom of the page. `html` also gets `background: var(--bg)` so the
-  canvas behind the page follows the active theme. Every page using this
-  stylesheet gets it automatically — if a page ever stops using
-  `styles.css`, re-add those rules to its own CSS. (Note: a box-shadow on
-  the footer can NOT color the bounce area — it scrolls away with the
-  page — so don't try that.)
-- **Safari chrome tint:** `script.js` keeps the `theme-color` meta in sync
-  while scrolling — Grove (#1F3B2E) while the dark contact/footer band is
-  on screen, otherwise the theme's page background. That's what tints the
-  toolbar around the Dynamic Island and the bottom tab bar on older iOS.
+  and bottom of the page. Every page using this stylesheet gets it
+  automatically — if a page ever stops using `styles.css`, re-add those
+  rules to its own CSS. (Note: a box-shadow on the footer can NOT color
+  the bounce area — it scrolls away with the page — so don't try that.)
+- **Safari chrome tint:** Safari reads some colors once and won't follow
+  classes toggled later, so the area outside the page is Grove (`--band`)
+  all the time: `html` and `body` both use it as their background, while
+  `main` paints its own theme background (`var(--bg)`) and the solid
+  sticky header (`var(--bg)`) covers the top. The footer gets
+  `env(safe-area-inset-bottom)` padding so it runs under the home
+  indicator; the header gets `env(safe-area-inset-top)` so
+  `viewport-fit=cover` doesn't slide it under the Dynamic Island.
+  `script.js` still updates the `theme-color` meta on scroll for older
+  iOS versions that read it.
   Safari 26 ignores `theme-color`, so the same check also toggles
   `html.chrome-band`, which turns the `html` background (the area past the
   end of the page, under the bottom tab bar) Grove. The sticky header is
