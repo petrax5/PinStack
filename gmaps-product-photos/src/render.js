@@ -20,10 +20,10 @@ const services = [
   { slug: '4-full-supreme-detail', n: 4, cat: 'Detail package', title: 'Full Supreme Detail', from: '$449',
     tag: 'Our complete inside-and-out detail.',
     items: ['Interior shampoo', 'Clay bar', 'Polish &amp; hand wax', 'Ceramic wash'] },
-  { slug: '5-paint-correction', n: 5, cat: 'Paint correction', title: 'Paint Correction', from: '$799',
+  { slug: '5-paint-correction', n: 5, cat: 'Paint correction', title: 'Paint Correction', from: '$799', premium: true,
     tag: 'Removes swirls, scratches and water spots.',
     items: ['Ultimate compound', 'Water spot removal', 'Polish &amp; hand wax', 'Clay bar'] },
-  { slug: '6-premium-ceramic-coating', n: 6, cat: 'Ceramic coating', title: 'Premium Ceramic Coating', from: '$849',
+  { slug: '6-premium-ceramic-coating', n: 6, cat: 'Ceramic coating', title: 'Premium Ceramic Coating', from: '$849', premium: true,
     tag: 'Long-term gloss and paint protection.',
     items: ['Paint correction', 'Ceramic coating', 'Interior detail', 'Paint disinfectant'] },
 ];
@@ -59,6 +59,18 @@ const page = (s) => `<!doctype html><html><head><meta charset="utf-8">
   .price{font-size:150px;font-weight:800;line-height:.9;letter-spacing:-.04em;color:#ea580c;margin-top:8px}
   .sizes{font-size:28px;font-weight:600;color:#475569;text-align:right;line-height:1.5;padding-bottom:10px}
   .sizes b{display:block;color:#0f172a;font-size:30px}
+  /* premium packages: dark card like the services page */
+  .card.dark-card{background:#0f172a;border:2px solid #1e293b;box-shadow:0 2px 4px rgba(15,23,42,.2),0 24px 60px rgba(15,23,42,.45)}
+  .dark-card .num{-webkit-text-stroke-color:#1c2a44}
+  .dark-card .label{color:#fb923c}
+  .dark-card h1{color:#fff}
+  .dark-card .tag{color:#cbd5e1}
+  .dark-card ul{border-color:#1e293b}
+  .dark-card li{color:#f1f5f9}
+  .dark-card .bottom .label{color:#94a3b8}
+  .dark-card .price{color:#fff}
+  .dark-card .sizes{color:#94a3b8}
+  .dark-card .sizes b{color:#fff}
   footer{position:absolute;left:64px;right:64px;bottom:58px;display:flex;align-items:center;justify-content:space-between;font-size:26px;font-weight:500;color:#1e293b}
   .dark{background:#0f172a;color:#fff;font-weight:700;padding:14px 30px;border-radius:999px}
   .dark em{font-style:normal;color:#fb923c}
@@ -68,7 +80,7 @@ const page = (s) => `<!doctype html><html><head><meta charset="utf-8">
     <div class="brand"><img src="${LOGO}" alt=""><div><b>Oasis</b><span>Detailing Supplies</span></div></div>
     <div class="pill">Package #${s.n}</div>
   </header>
-  <div class="card">
+  <div class="card${s.premium ? ' dark-card' : ''}">
     <div class="num">0${s.n}</div>
     <div class="label">${s.cat}</div>
     <h1>${s.title}</h1>
