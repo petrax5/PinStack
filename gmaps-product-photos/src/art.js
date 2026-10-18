@@ -1,5 +1,6 @@
 // Studio-style vector illustrations for each package (viewBox 0 0 1096 520, matches the photo slot).
 
+const C = require('./car34');
 const W = 1096, H = 520, GROUND = 420;
 
 const defs = `
@@ -116,8 +117,8 @@ const sparkle = (x, y, s = 1, c = '#fff') =>
   `<path transform="translate(${x} ${y}) scale(${s})" d="M0 -26 C3 -6 6 -3 26 0 C6 3 3 6 0 26 C-3 6 -6 3 -26 0 C-6 -3 -3 -6 0 -26 Z" fill="${c}" filter="url(#glow)"/>`;
 
 const svg = (inner) => `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${defs}${backdrop()}${inner}</svg>`;
-// car scenes: scale 1.15 so the car fills the frame, ground lands at y=440
-const carSvg = (inner) => `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${defs}${backdrop(440)}<g transform="translate(-90 -43) scale(1.15)">${inner}</g></svg>`;
+// car scenes: lower horizon so the 3/4 car sits on the studio floor
+const carSvg = (inner) => `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${defs}${backdrop(330)}<g transform="translate(548 330) scale(1.12) translate(-548 -330)">${inner}</g></svg>`;
 
 // deterministic pseudo-random so renders are stable
 const rand = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -217,17 +218,40 @@ const correctionScene = () => `
   </g>
   ${sparkle(900, 220, 1.4)}${sparkle(1000, 330, .9)}${sparkle(760, 420, .7, '#fdba74')}`;
 
+function foam34() {
+  const r = rand(7), out = [];
+  const pts = [[140,334],[200,340],[260,344],[320,350],[380,354],[190,312],[250,290],[300,272],[420,280],[500,288],
+    [400,222],[460,218],[520,220],[580,228],[650,234],[720,240],[790,250],[850,268],[910,286],[960,306]];
+  for (const [x, y] of pts) for (let i = 0; i < 3; i++)
+    out.push(`<circle cx="${(x + (r() - .5) * 40).toFixed(1)}" cy="${(y - r() * 14).toFixed(1)}" r="${(12 + r() * 18).toFixed(1)}" fill="url(#foam)"/>`);
+  const drips = [[230,346,38],[340,352,30],[640,304,46],[760,298,30],[900,296,40],[960,318,28]]
+    .map(([x, y, h]) => `<path d="M${x - 8} ${y} L${x + 8} ${y} L${x + 6} ${y + h} A6 6 0 0 1 ${x - 6} ${y + h} Z" fill="url(#foam)"/>`);
+  return `<g clip-path="url(#car34clip)"><rect width="${W}" height="${H}" fill="#fff" opacity=".22"/></g>${drips.join('')}${out.join('')}`;
+}
+
+function beads34(seed) {
+  const r = rand(seed), out = [];
+  const zones = [[160, 520, 296, 352], [480, 960, 312, 400], [820, 960, 262, 300]];
+  for (const [x0, x1, y0, y1] of zones) for (let i = 0; i < 34; i++) {
+    const x = x0 + r() * (x1 - x0), y = y0 + r() * (y1 - y0), rr = 2.5 + r() * 5;
+    out.push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr.toFixed(1)}" fill="url(#bead)"/><circle cx="${(x - rr * .35).toFixed(1)}" cy="${(y - rr * .35).toFixed(1)}" r="${(rr * .3).toFixed(1)}" fill="#fff"/>`);
+  }
+  return `<g clip-path="url(#car34clip)">${out.join('')}</g>`;
+}
+
+const sweep34 = (x) => `<g clip-path="url(#car34clip)"><path d="M${x} 200 L${x + 110} 200 L${x - 40} 440 L${x - 150} 440 Z" fill="url(#sweep)"/></g>`;
+
 module.exports = {
-  wash: () => carSvg(car({ extra: foamLayer() }) + droplets(28, 3, [140, 30, 960, 200])),
+  wash: () => carSvg(C.car({ extra: foam34() }) + droplets(26, 3, [120, 30, 980, 190])),
   interior: () => svg(seatScene()),
-  exterior: () => carSvg(car({ extra: `<g clip-path="url(#bc3)"><path d="M520 180 L620 180 L520 400 L420 400 Z" fill="url(#sweep)"/></g><clipPath id="bc3"><path d="${BODY}"/></clipPath>` })
-    + sparkle(560, 236, 1.4) + sparkle(880, 318, 1.1) + sparkle(260, 300, .9) + sparkle(700, 120, .7, '#fb923c') + sparkle(380, 150, .8)),
-  full: () => carSvg(`<ellipse cx="555" cy="${GROUND + 6}" rx="410" ry="28" fill="none" stroke="#ea580c" stroke-width="4" opacity=".55"/>
-    <ellipse cx="555" cy="${GROUND + 6}" rx="390" ry="22" fill="#ffffff" opacity=".6"/>`
-    + car({ seats: true, extra: `<g clip-path="url(#bc4)"><path d="M600 180 L700 180 L600 400 L500 400 Z" fill="url(#sweep)"/></g><clipPath id="bc4"><path d="${BODY}"/></clipPath>` })
-    + sparkle(450, 220, 1.2) + sparkle(900, 300, 1) + sparkle(220, 290, .8) + sparkle(640, 110, .9, '#fb923c') + sparkle(820, 160, .6)),
+  exterior: () => carSvg(C.car({ extra: sweep34(560) })
+    + sparkle(402, 360, 1.3) + sparkle(600, 300, 1.1) + sparkle(250, 300, .9) + sparkle(820, 150, .8, '#fb923c') + sparkle(300, 150, .7)),
+  full: () => carSvg(`<ellipse cx="550" cy="420" rx="410" ry="42" fill="#ffffff" opacity=".65"/>
+    <ellipse cx="550" cy="420" rx="426" ry="48" fill="none" stroke="#ea580c" stroke-width="4" opacity=".55"/>`
+    + C.car({ seats: true, extra: sweep34(700) })
+    + sparkle(402, 360, 1.2) + sparkle(880, 290, 1) + sparkle(200, 250, .8) + sparkle(640, 150, .9, '#fb923c') + sparkle(960, 200, .6)),
   correction: () => svg(correctionScene()),
-  coating: () => carSvg(car({ extra: `<path d="${BODY}" fill="url(#sheen)"/>` + beads(11) })
-    + droplets(10, 21, [180, 60, 940, 170])
-    + sparkle(500, 214, 1.1) + sparkle(900, 314, .9) + sparkle(250, 120, .7, '#fb923c')),
+  coating: () => carSvg(C.car({ extra: `<g clip-path="url(#car34clip)"><rect width="${W}" height="${H}" fill="url(#sheen)"/></g>` + beads34(11) })
+    + droplets(10, 21, [140, 40, 960, 170])
+    + sparkle(400, 358, 1.1) + sparkle(880, 300, .9) + sparkle(220, 140, .7, '#fb923c')),
 };
