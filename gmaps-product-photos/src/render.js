@@ -79,7 +79,7 @@ const page = (s) => `<!doctype html><html><head><meta charset="utf-8">
       <div class="sizes"><b>Car · SUV · Truck</b>Priced by vehicle size</div>
     </div>
   </div>
-  <footer><span>223 S Tustin St, Orange · 714-363-3556</span><span class="dark">Book <em>today</em></span></footer>
+  <footer><span>223 S Tustin St, Orange · (800) 916-4731</span><span class="dark">Book <em>today</em></span></footer>
 </body></html>`;
 
 (async () => {

@@ -26,7 +26,7 @@ What's included:
 ✓ Windows Cleaning
 ✓ Luxury Tire Dressing
 
-Call 714-363-3556 or book online.
+Call (800) 916-4731 or book online.
 
 ---
 
@@ -49,7 +49,7 @@ What's included:
 ✓ Spray Wax
 ✓ Luxury Tire Dressing
 
-Call 714-363-3556 or book online.
+Call (800) 916-4731 or book online.
 
 ---
 
@@ -72,7 +72,7 @@ What's included:
 ✓ Windows Cleaning
 ✓ Luxury Tire Dressing
 
-Call 714-363-3556 or book online.
+Call (800) 916-4731 or book online.
 
 ---
 
@@ -95,7 +95,7 @@ What's included:
 ✓ Polish
 ✓ Luxury Tire Dressing
 
-Call 714-363-3556 or book online.
+Call (800) 916-4731 or book online.
 
 ---
 
@@ -117,7 +117,7 @@ What's included:
 ✓ Conditioner
 ✓ Luxury Tire Dressing
 
-Call 714-363-3556 or book online.
+Call (800) 916-4731 or book online.
 
 ---
 
@@ -140,4 +140,4 @@ What's included:
 ✓ Premium Ceramic Coating
 ✓ Luxury Tire Dressing
 
-Call 714-363-3556 or book online.
+Call (800) 916-4731 or book online.
