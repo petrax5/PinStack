@@ -10,6 +10,14 @@ const uri = (f, type = 'jpeg') => `data:image/${type};base64,` + fs.readFileSync
 const LOGO = uri('photos/logo.png', 'png');
 const art = require('./art');
 
+// Drop a photo named after the package (e.g. photos/1-ceramic-soap-wash.jpg / .png / .webp) to use it instead of the illustration
+const photoFor = (s) => {
+  for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
+    const f = path.join(__dirname, 'photos', `${s.slug}.${ext}`);
+    if (fs.existsSync(f)) return `data:image/${ext === 'jpg' ? 'jpeg' : ext};base64,` + fs.readFileSync(f).toString('base64');
+  }
+};
+
 const services = [
   { art: art.wash, slug: '1-ceramic-soap-wash', n: 1, cat: 'Express wash', title: 'Ceramic Soap Wash', from: '$99' },
   { art: art.interior, slug: '2-interior-supreme-detail', n: 2, cat: 'Detail package', title: 'Interior Supreme Detail', from: '$299' },
@@ -37,7 +45,8 @@ const page = (s) => `<!doctype html><html><head><meta charset="utf-8">
   .card{position:absolute;top:196px;left:64px;right:64px;height:836px;background:#fff;border-radius:28px;
     box-shadow:0 2px 4px rgba(15,23,42,.06),0 24px 60px rgba(15,23,42,.18);padding:26px;display:flex;flex-direction:column}
   .photo{height:520px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#f8fafc,#e2e8f0)}
-  .photo svg{display:block;width:100%;height:100%}
+  .photo svg,.photo img{display:block;width:100%;height:100%}
+  .photo img{object-fit:cover}
   .info{flex:1;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:0 22px}
   .label{font-size:22px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#64748b}
   h1{margin-top:10px;font-size:62px;font-weight:800;line-height:1.04;letter-spacing:-.02em;color:#0f172a;max-width:620px;text-wrap:balance}
@@ -54,7 +63,7 @@ const page = (s) => `<!doctype html><html><head><meta charset="utf-8">
     <div class="pill">Package #${s.n}</div>
   </header>
   <div class="card">
-    <div class="photo">${s.art()}</div>
+    <div class="photo">${photoFor(s) ? `<img src="${photoFor(s)}" alt="">` : s.art()}</div>
     <div class="info">
       <div><div class="label">${s.cat}</div><h1>${s.title}</h1></div>
       <div class="price"><div class="label">Starting at</div><b>${s.from}</b></div>
