@@ -26,6 +26,8 @@ What's included:
 ✓ Windows Cleaning
 ✓ Luxury Tire Dressing
 
+Mobile car detailing in Orange County. Oasis Detailing Supplies has 18 years of experience caring for every type of vehicle, inside and out. We treat your car like it's our own.
+
 Call (800) 916-4731 or book online.
 
 ---
@@ -48,6 +50,8 @@ What's included:
 ✓ Windows Cleaning
 ✓ Spray Wax
 ✓ Luxury Tire Dressing
+
+Mobile car detailing in Orange County. Oasis Detailing Supplies has 18 years of experience caring for every type of vehicle, inside and out. We treat your car like it's our own.
 
 Call (800) 916-4731 or book online.
 
@@ -72,6 +76,8 @@ What's included:
 ✓ Windows Cleaning
 ✓ Luxury Tire Dressing
 
+Mobile car detailing in Orange County. Oasis Detailing Supplies has 18 years of experience caring for every type of vehicle, inside and out. We treat your car like it's our own.
+
 Call (800) 916-4731 or book online.
 
 ---
@@ -95,6 +101,8 @@ What's included:
 ✓ Polish
 ✓ Luxury Tire Dressing
 
+Mobile car detailing in Orange County. Oasis Detailing Supplies has 18 years of experience caring for every type of vehicle, inside and out. We treat your car like it's our own.
+
 Call (800) 916-4731 or book online.
 
 ---
@@ -116,6 +124,8 @@ What's included:
 ✓ Interior Cleaner
 ✓ Conditioner
 ✓ Luxury Tire Dressing
+
+Mobile car detailing in Orange County. Oasis Detailing Supplies has 18 years of experience caring for every type of vehicle, inside and out. We treat your car like it's our own.
 
 Call (800) 916-4731 or book online.
 
@@ -139,5 +149,7 @@ What's included:
 ✓ Paint Disinfectant
 ✓ Premium Ceramic Coating
 ✓ Luxury Tire Dressing
+
+Mobile car detailing in Orange County. Oasis Detailing Supplies has 18 years of experience caring for every type of vehicle, inside and out. We treat your car like it's our own.
 
 Call (800) 916-4731 or book online.
